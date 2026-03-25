@@ -1,0 +1,228 @@
+# Explicacao linha a linha (index.html)
+
+> Documento legado: este material descreve a versao antiga do projeto, quando CSS e JavaScript ainda estavam inline no `index.html`. Use apenas como referencia historica.
+
+Este arquivo explica o `index.html` do projeto, com foco no bloco de JavaScript (CEP, formulario e chatbot).
+
+Versao explicada (pontos principais no `index.html`):
+- `:root` (variaveis CSS): linha 16
+- `<nav>`: linha 348
+- `<main id="conteudo">`: linha 356
+- `<form id="contactForm">`: linha 412
+- Botao flutuante do chat (FAB): linha 441
+- Widget do chat: linha 445
+- JavaScript: linhas 471 a 706
+
+Como acompanhar:
+- Abra `index.html` no editor e ative a numeracao de linhas.
+- Use os numeros abaixo para cruzar com o codigo.
+- Linhas em branco no JS so separam blocos (nao tem logica).
+
+## JavaScript (linhas 471 a 706 do index.html)
+
+### Parte 1: ViaCEP (CEP -> endereco)
+
+- 471: `<script>` inicia o bloco de JavaScript da pagina.
+- 472: Comentario que marca o inicio da logica do formulario/CEP.
+- 473: Pega o input `#cep` para ler/formatar o CEP digitado.
+- 474: Pega o `#cepStatus`, que mostra mensagens como "Buscando..." ou erro.
+- 475: Pega o input `#logradouro` (rua) para preencher automaticamente.
+- 476: Pega o input `#bairro` para preencher automaticamente.
+- 477: Pega o input `#localidade` (cidade/UF) para preencher automaticamente.
+- 479: Define `setCepStatus(...)`, funcao que escreve uma mensagem abaixo do campo CEP.
+- 480: Se `#cepStatus` nao existir, sai da funcao (evita erro).
+- 481: Atualiza o texto visivel do status (`textContent`).
+- 482: Liga/desliga a classe CSS `error` para pintar a mensagem de erro.
+- 483: Fecha a funcao `setCepStatus`.
+- 485: Define `clearEndereco()`, funcao que limpa os campos de endereco.
+- 486: Se `#logradouro` existir, limpa o valor.
+- 487: Se `#bairro` existir, limpa o valor.
+- 488: Se `#localidade` existir, limpa o valor.
+- 489: Fecha a funcao `clearEndereco`.
+- 491: Define `formatCep(digits)` para transformar `12345678` em `12345-678`.
+- 492: Se tiver ate 5 digitos, retorna como esta (ainda nao da para por o hifen).
+- 493: Quando tiver 6 a 8 digitos, monta `00000-000` usando `slice`.
+- 494: Fecha a funcao `formatCep`.
+- 496: Comeca um `if` para so adicionar eventos se `#cep` existir.
+- 497: Comentario: esta parte aplica uma mascara simples no CEP.
+- 498: Adiciona listener de `input` (roda a cada digitacao).
+- 499: Remove tudo que nao e numero (`\D`) e limita a 8 digitos.
+- 500: Reescreve o valor do input ja formatado (com hifen quando aplicavel).
+- 501: Se ainda nao chegou em 8 digitos...
+- 502: Limpa qualquer mensagem de status.
+- 503: Limpa os campos de endereco (evita ficar com endereco antigo).
+- 504: Fecha o `if` do "digits.length < 8".
+- 505: Fecha o listener de `input`.
+- 507: Comentario: a consulta ao ViaCEP acontece no `blur`.
+- 508: Adiciona listener de `blur` (quando o usuario sai do campo).
+- 509: Pega so os digitos do valor (sem hifen).
+- 511: Se o campo ficou vazio...
+- 512: Limpa status.
+- 513: Limpa endereco.
+- 514: `return` para encerrar o handler.
+- 515: Fecha o `if (!digits)`.
+- 517: Se nao tiver exatamente 8 digitos...
+- 518: Mostra erro "CEP invalido".
+- 519: Limpa endereco.
+- 520: `return` para nao chamar API com CEP errado.
+- 521: Fecha o `if (digits.length !== 8)`.
+- 523: Chama `buscarEndereco(digits)` (consulta ViaCEP e preenche campos).
+- 524: Fecha o listener de `blur`.
+- 525: Fecha o `if (cepInput)`.
+- 527: Declara `async function buscarEndereco(cep)` (usa `await` dentro).
+- 528: Inicia `try/catch` para tratar erros de rede/JSON.
+- 529: Mostra status "Buscando endereco..." enquanto faz a requisicao.
+- 530: Faz `fetch` no endpoint do ViaCEP com o CEP informado.
+- 531: Converte resposta em JSON.
+- 533: Se o ViaCEP retornar `erro: true`...
+- 534: Mostra "CEP nao encontrado".
+- 535: Limpa endereco.
+- 536: `return` para encerrar a funcao.
+- 537: Fecha o `if (dados.erro)`.
+- 539: Preenche `logradouro` com o valor retornado (ou string vazia).
+- 540: Preenche `bairro` com o valor retornado (ou string vazia).
+- 541: Preenche `localidade` no formato "Cidade - UF".
+- 542: Mostra status de sucesso.
+- 543: Entra no `catch` se o `fetch` falhar ou o JSON der erro.
+- 544: Loga o erro no console (para debug).
+- 545: Mostra mensagem de falha (ex: sem internet).
+- 546: Limpa endereco.
+- 547: Fecha o `catch`.
+- 548: Fecha a funcao `buscarEndereco`.
+
+### Parte 2: Formulario de contato (demo)
+
+- 550: Comentario: inicio da logica do formulario (sem backend, apenas demonstracao).
+- 551: Pega o elemento do formulario `#contactForm`.
+- 552: Pega o `#formStatus` para exibir mensagens (enviado/erro).
+- 554: Define `setFormStatus(...)`, parecido com `setCepStatus`.
+- 555: Se `#formStatus` nao existir, sai (evita erro).
+- 556: Atualiza o texto do status do formulario.
+- 557: Liga/desliga classe `error` no status do formulario.
+- 558: Fecha `setFormStatus`.
+- 560: So adiciona listeners se o formulario existir.
+- 561: Listener de `submit` (quando clica em "Enviar").
+- 562: `preventDefault()` evita recarregar a pagina.
+- 563: `reset()` limpa os inputs do formulario.
+- 564: Limpa mensagem do CEP (se tinha algo escrito).
+- 565: Garante endereco limpo apos reset.
+- 566: Mostra mensagem de enviado (demo).
+- 567: Fecha listener de `submit`.
+- 569: Listener de `reset` (quando clica em "Limpar").
+- 570: Limpa mensagem do formulario.
+- 571: Limpa mensagem do CEP.
+- 572: Limpa endereco.
+- 573: Fecha listener de `reset`.
+- 574: Fecha o `if (contactForm)`.
+
+### Parte 3: Chatbot (ColorIA)
+
+- 576: Comentario: inicio da logica do chatbot.
+- 577: Pega o container do widget `#chatWidget`.
+- 578: Pega a area onde as mensagens aparecem `#chatWindow`.
+- 579: Pega o input de texto do usuario `#userInput`.
+- 580: Pega o botao de enviar `#sendBtn`.
+- 581: Pega o botao flutuante (FAB) `#fabChat`.
+- 582: Pega o botao do menu `#navChatToggle`.
+- 583: Pega o botao "X" de fechar `#closeChat`.
+- 585: Comentario: parte do "estado" da conversa (maquina de estados simples).
+- 586: Declara `createChatContext()` para criar o estado inicial.
+- 587: Retorna objeto com `step` e campos que guardam informacoes da conversa.
+- 588: Fecha `createChatContext`.
+- 590: Cria `context` inicial (step 0, sem cor base nem objetivo).
+- 591: Guarda o ultimo botao que abriu/fechou o chat (para devolver foco ao fechar).
+- 593: Declara `isChatOpen()` para saber se o chat esta aberto.
+- 594: Retorna `true/false` olhando se `#chatWidget` tem classe `active`.
+- 595: Fecha `isChatOpen`.
+- 597: Declara `setChatOpen(open)` que abre/fecha o chat.
+- 598: Se nao existir `#chatWidget`, sai.
+- 600: Alterna a classe `active` com base no boolean `open`.
+- 601: Atualiza `aria-hidden` para acessibilidade (leitores de tela).
+- 603: Para cada botao que controla o chat (FAB e menu)...
+- 604: Se o elemento nao existir, ignora.
+- 605: Atualiza `aria-expanded` para refletir aberto/fechado.
+- 606: Fecha o `forEach`.
+- 608: Se estiver abrindo o chat...
+- 609: Foca o input do usuario (com `setTimeout` para esperar o DOM atualizar).
+- 610: Senao (fechando)...
+- 611: Devolve o foco ao ultimo botao que acionou o chat (melhora UX/acessibilidade).
+- 612: Fecha `if (open)`.
+- 613: Fecha `setChatOpen`.
+- 615: Declara `toggleChat(event)` para alternar aberto/fechado.
+- 616: Guarda o botao que disparou o evento (para devolver foco depois).
+- 617: Chama `setChatOpen` invertendo o estado atual.
+- 618: Fecha `toggleChat`.
+- 620: Clique no FAB abre/fecha.
+- 621: Clique no botao do menu abre/fecha.
+- 622: Clique no X fecha.
+- 623: Atualiza `lastChatToggle` com o botao clicado.
+- 624: Fecha o chat explicitamente.
+- 625: Fecha listener do botao X.
+- 627: Listener global de teclado.
+- 628: Se apertar `Esc` e o chat estiver aberto, fecha.
+- 629: Fecha listener global.
+- 631: Declara `addMessage(text, sender)` para adicionar bolhas no chat.
+- 632: Se `#chatWindow` nao existir, sai.
+- 633: Cria um `div` novo para a mensagem.
+- 634: Aplica classes de mensagem do usuario ou do bot.
+- 635: Coloca o texto dentro da bolha (`textContent` evita HTML injection).
+- 636: Anexa a mensagem na janela do chat.
+- 637: Faz scroll para o final para mostrar a mensagem nova.
+- 638: Fecha `addMessage`.
+- 640: Declara `getBaseColor(lowerText)` para identificar a cor base.
+- 641: Lista as cores base aceitas.
+- 642: Retorna a primeira cor que aparecer no texto, ou vazio.
+- 643: Fecha `getBaseColor`.
+- 645: Declara `processInput(text)` que decide a resposta do bot.
+- 646: Normaliza o texto: tira espacos e coloca em minusculo.
+- 647: Se ficou vazio, para.
+- 649: Comentario: comando "reiniciar" funciona em qualquer etapa.
+- 650: Se usuario digitou "reiniciar"...
+- 651: Reseta o `context` para o estado inicial.
+- 652: Envia mensagem do bot reiniciando a conversa.
+- 653: `return` para nao continuar processando.
+- 654: Fecha `if (reiniciar)`.
+- 656: Cria variavel `response` que vai receber a resposta do bot.
+- 658: Se `step === 0`, estamos esperando a cor base.
+- 659: Tenta extrair a cor base do texto.
+- 660: Se achou uma cor base valida...
+- 661: Salva no estado.
+- 662: Avanca para `step = 1` (proxima pergunta).
+- 663: Pergunta o objetivo (ex: ficar loiro(a), cobrir brancos).
+- 664: Senao...
+- 665: Pede para o usuario tentar uma das cores conhecidas.
+- 666: Fecha `if (context.step === 0)`.
+- 667: Senao se `step === 1`, estamos esperando o objetivo.
+- 668: Guarda o objetivo (texto livre).
+- 669: Avanca para `step = 2` (conversa finalizada).
+- 671: Comentario: regras didaticas de colorimetria.
+- 672: Detecta se objetivo envolve "loiro/loira".
+- 673: Detecta se objetivo envolve "branco(s)".
+- 675: Caso especifico: base preta e quer loiro.
+- 676: Resposta alerta sobre descoloracao e teste de mecha.
+- 677: Senao, se quer cobrir brancos...
+- 678: Sugere uma regra comum (base x.0 + OX 20).
+- 679: Senao...
+- 680: Resposta generica pedindo teste de mecha e citando OX 20/30.
+- 681: Fecha o `else` da logica.
+- 683: Adiciona instrucao para reiniciar (usa `\n\n`; o CSS preserva a quebra).
+- 684: Fecha o `else if (step === 1)`.
+- 685: Se ja terminou a conversa, pede para reiniciar para nova consulta.
+- 686: Fecha o `else` final.
+- 688: Envia a mensagem do bot com pequeno atraso (efeito de "pensando").
+- 689: Fecha `processInput`.
+- 691: Declara `handleSend()` para enviar mensagem do usuario.
+- 692: Le o texto do input (com protecoes usando `?.` e `??`).
+- 693: Se estiver vazio, nao faz nada.
+- 694: Adiciona a mensagem do usuario no chat.
+- 695: Limpa o input.
+- 696: Chama `processInput` para gerar resposta do bot.
+- 697: Fecha `handleSend`.
+- 699: Clique no botao de enviar dispara `handleSend`.
+- 700: Listener de teclado no input.
+- 701: Se apertar Enter...
+- 702: `preventDefault()` evita comportamento padrao.
+- 703: Envia a mensagem.
+- 704: Fecha `if`.
+- 705: Fecha listener de teclado do input.
+- 706: `</script>` fecha o bloco de JavaScript.

@@ -1,0 +1,5 @@
+.headless-profile/
+.headless-profile-edge/
+data/*.db
+data/*.db-shm
+data/*.db-wal

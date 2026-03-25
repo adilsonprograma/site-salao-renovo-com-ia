@@ -1,61 +1,79 @@
-# ✂️ Renovo Cabeleireiros & 🤖 ColorIA Chatbot
+# Renovo Cabeleireiros & ColorIA
 
-> Um projeto híbrido combinando uma Landing Page Institucional com um Assistente Virtual de Colorimetria baseado em regras.
+Landing page institucional com formulario de agendamento, galeria interativa, chatbot de apoio e persistencia local de agendamentos em SQLite.
 
-![Status do Projeto](https://img.shields.io/badge/Status-Concluído-brightgreen)
-![Tecnologias](https://img.shields.io/badge/HTML5-CSS3-JavaScript)
+## Estrutura do projeto
 
-## 📖 Sobre o Projeto
+```text
+.
+|-- assets/
+|   |-- images/
+|   |   `-- renovo-salao.png
+|   |-- scripts/
+|   |   |-- app.js
+|   |   `-- modules/
+|   |       |-- chat-widget.js
+|   |       |-- contact-form.js
+|   |       `-- gallery-carousel.js
+|   `-- styles/
+|       `-- main.css
+|-- data/
+|   `-- appointments.db
+|-- docs/
+|   |-- EXPLICACAO_INDEX.md
+|   `-- previews/
+|-- server/
+|   |-- database.js
+|   `-- validation.js
+|-- index.html
+|-- package.json
+|-- server.js
+`-- README.md
+```
 
-Este projeto foi desenvolvido como parte dos estudos em **Engenharia de Software**. O objetivo foi criar uma solução web completa que atenda a duas necessidades:
-1.  **Institucional:** Apresentar o salão "Renovo Cabeleireiros", seus serviços e facilitar o contato.
-2.  **Funcionalidade Interativa:** Implementar um **Chatbot (ColorIA)** que utiliza lógica condicional para auxiliar clientes em dúvidas sobre colorimetria capilar.
+## O que cada parte faz
 
-O diferencial técnico deste projeto é a unificação de interfaces distintas (Site Institucional + Widget de Chat Flutuante) em uma experiência de usuário fluida e responsiva.
+- `assets/`: interface visual, comportamento do front-end e imagens.
+- `server/`: persistencia SQLite e validacao dos dados de agendamento.
+- `data/`: banco local gerado automaticamente em tempo de execucao.
+- `server.js`: servidor HTTP que entrega a landing page e a API `/api/appointments`.
 
----
+## Funcionalidades
 
-## 🚀 Funcionalidades
+- Landing page moderna com carrossel e secoes interativas.
+- Chatbot que ajuda com pre-agendamento, cor e tendencias.
+- Formulario de agendamento com ViaCEP e gravacao em banco.
+- API local para salvar e listar agendamentos.
+- Banco SQLite sem dependencias externas.
 
-### 🏢 Site Institucional (Landing Page)
-* **Design Responsivo:** Layout adaptável para dispositivos móveis e desktops.
-* **Navegação Fluida:** Menu com links de âncora para seções específicas.
-* **Integração de API:** Consumo da API **ViaCEP** para preenchimento automático de endereço no formulário de contato.
-* **Tabela de Horários:** Exibição clara e estilizada dos horários de funcionamento.
+## Como executar
 
-### 🤖 ColorIA (Chatbot Inteligente)
-* **Interface Flutuante (Widget):** O chat pode ser aberto ou minimizado sem sair da página principal.
-* **Lógica de Estado (State Machine):** O bot "lembra" em qual etapa da conversa está (cor base -> objetivo -> recomendação).
-* **Prevenção de Erros:** Validações simples para garantir que o usuário responda o que foi perguntado.
-* **Recomendações Técnicas:** Lógica baseada em princípios reais de colorimetria (ex: "tinta não clareia tinta").
+Como o projeto agora grava os agendamentos no banco, abra pela API local em vez de abrir o `index.html` direto.
 
----
+### Opcao 1
 
-## 🛠️ Tecnologias Utilizadas
+```powershell
+node server.js
+```
 
-* **HTML5:** Estrutura semântica (`<main>`, `<nav>`, `<header>`, `<footer>`).
-* **CSS3:**
-    * **Flexbox:** Para alinhamento de layouts.
-    * **CSS Variables:** Cores e fontes padronizadas.
-    * **Animations:** Efeito de *fade-in* nas mensagens do chat.
-    * **Media Queries:** Para responsividade em celulares.
-* **JavaScript (ES6+):**
-    * **DOM Manipulation:** Controle de elementos da tela.
-    * **Fetch API / Async Await:** Para requisições HTTP assíncronas (ViaCEP).
-    * **Event Listeners:** Captura de cliques e interação do teclado.
+### Opcao 2
 
----
+```powershell
+npm start
+```
 
-## 🧠 Conceitos de Engenharia Aplicados
+Depois abra:
 
-Para fins de estudo e documentação técnica, aqui estão os conceitos chave implementados:
+```text
+http://localhost:3000
+```
 
-### 1. Consumo de API Assíncrona (AJAX moderno)
-No formulário de contato, utilizamos `async/await` para buscar dados do CEP. Isso evita que a página "congele" enquanto busca os dados no servidor do ViaCEP.
+## Endpoints disponiveis
 
-```javascript
-// Exemplo do código utilizado
-async function buscarEndereco(cep) {
-    const consulta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-    // ... processamento dos dados
-}# progeto-renovo-com-ia
+- `GET /api/health`: status do servidor e caminho do banco.
+- `GET /api/appointments`: lista os agendamentos mais recentes.
+- `POST /api/appointments`: salva um novo agendamento.
+
+## Observacao
+
+O projeto usa o modulo nativo `node:sqlite` do Node.js. No ambiente atual ele funcionou normalmente para criar e consultar o banco local.

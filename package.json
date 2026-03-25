@@ -1,0 +1,9 @@
+{
+  "name": "renovo-coloria",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js && node --check server/database.js && node --check server/validation.js && node --check assets/scripts/app.js && node --check assets/scripts/modules/contact-form.js && node --check assets/scripts/modules/chat-widget.js && node --check assets/scripts/modules/gallery-carousel.js"
+  }
+}
