@@ -77,3 +77,4 @@ http://localhost:3000
 ## Observacao
 
 O projeto usa o modulo nativo `node:sqlite` do Node.js. No ambiente atual ele funcionou normalmente para criar e consultar o banco local.
+# site-salao-renovo-com-ia
