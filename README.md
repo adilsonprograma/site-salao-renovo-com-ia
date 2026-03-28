@@ -1,62 +1,57 @@
 # Renovo Cabeleireiros & ColorIA
 
-Landing page institucional com formulario de agendamento, galeria interativa, chatbot de apoio e persistencia local de agendamentos em SQLite.
+Landing page institucional com:
 
-## Estrutura do projeto
+- formulario de agendamento salvo em SQLite
+- chat de atendimento com modo local ou Gemini
+- webhook e envio de mensagens via WhatsApp Cloud API
+- front-end e back-end separados por responsabilidade
+
+## Estrutura principal
 
 ```text
 .
 |-- assets/
 |   |-- images/
-|   |   `-- renovo-salao.png
 |   |-- scripts/
 |   |   |-- app.js
-|   |   `-- modules/
-|   |       |-- chat-widget.js
-|   |       |-- contact-form.js
-|   |       `-- gallery-carousel.js
+|   |   |-- modules/
+|   |   |   |-- chat-widget.js
+|   |   |   |-- contact-form.js
+|   |   |   `-- gallery-carousel.js
+|   |   `-- services/
+|   |       `-- api-client.js
 |   `-- styles/
 |       `-- main.css
 |-- data/
-|   `-- appointments.db
 |-- docs/
-|   |-- EXPLICACAO_INDEX.md
-|   `-- previews/
+|   |-- ARQUITETURA.md
+|   `-- CONFIGURACAO_APIS.md
 |-- server/
+|   |-- services/
+|   |   |-- appointments.js
+|   |   |-- assistant.js
+|   |   |-- fallback-assistant.js
+|   |   |-- gemini.js
+|   |   `-- whatsapp.js
+|   |-- config.js
 |   |-- database.js
+|   |-- http.js
+|   |-- routes.js
+|   |-- static-server.js
 |   `-- validation.js
 |-- index.html
 |-- package.json
-|-- server.js
-`-- README.md
+`-- server.js
 ```
 
-## O que cada parte faz
-
-- `assets/`: interface visual, comportamento do front-end e imagens.
-- `server/`: persistencia SQLite e validacao dos dados de agendamento.
-- `data/`: banco local gerado automaticamente em tempo de execucao.
-- `server.js`: servidor HTTP que entrega a landing page e a API `/api/appointments`.
-
-## Funcionalidades
-
-- Landing page moderna com carrossel e secoes interativas.
-- Chatbot que ajuda com pre-agendamento, cor e tendencias.
-- Formulario de agendamento com ViaCEP e gravacao em banco.
-- API local para salvar e listar agendamentos.
-- Banco SQLite sem dependencias externas.
-
 ## Como executar
-
-Como o projeto agora grava os agendamentos no banco, abra pela API local em vez de abrir o `index.html` direto.
-
-### Opcao 1
 
 ```powershell
 node server.js
 ```
 
-### Opcao 2
+ou
 
 ```powershell
 npm start
@@ -68,13 +63,33 @@ Depois abra:
 http://localhost:3000
 ```
 
-## Endpoints disponiveis
+## Scripts
 
-- `GET /api/health`: status do servidor e caminho do banco.
-- `GET /api/appointments`: lista os agendamentos mais recentes.
-- `POST /api/appointments`: salva um novo agendamento.
+```powershell
+cmd /c npm run check
+```
 
-## Observacao
+Observacao:
+No PowerShell deste ambiente o `npm.ps1` pode estar bloqueado por politica de execucao, por isso o uso de `cmd /c` e o caminho mais seguro.
 
-O projeto usa o modulo nativo `node:sqlite` do Node.js. No ambiente atual ele funcionou normalmente para criar e consultar o banco local.
-# site-salao-renovo-com-ia
+## Endpoints
+
+- `GET /api/health`: status do servidor, banco e integracoes
+- `GET /api/integrations`: resumo das integracoes configuradas
+- `GET /api/appointments`: lista agendamentos recentes
+- `POST /api/appointments`: salva um agendamento manual
+- `POST /api/assistant/chat`: conversa com a ColorIA pelo site
+- `GET /webhooks/whatsapp`: verificacao do webhook da Meta
+- `POST /webhooks/whatsapp`: recebe mensagens do WhatsApp Cloud API
+
+## Integracoes
+
+- Gemini: usado para interpretar conversas e montar pre-agendamentos quando `GEMINI_API_KEY` estiver configurada
+- WhatsApp Cloud API: usada para responder mensagens do WhatsApp e opcionalmente notificar a equipe sobre novos agendamentos
+
+Veja os detalhes em `docs/CONFIGURACAO_APIS.md`.
+
+## Documentacao interna
+
+- `docs/ARQUITETURA.md`
+- `docs/CONFIGURACAO_APIS.md`

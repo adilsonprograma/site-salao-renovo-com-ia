@@ -18,6 +18,10 @@ function isValidEmail(value) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
+function isEmailRequired(source) {
+    return !["site_chat", "whatsapp_cloud", "assistant_api"].includes(source);
+}
+
 function validateAppointment(payload = {}) {
     const appointment = {
         nome: cleanText(payload.nome, 140),
@@ -49,7 +53,11 @@ function validateAppointment(payload = {}) {
         errors.push("Nome completo e obrigatorio.");
     }
 
-    if (!appointment.email || !isValidEmail(appointment.email)) {
+    if (appointment.email && !isValidEmail(appointment.email)) {
+        errors.push("E-mail invalido.");
+    }
+
+    if (isEmailRequired(appointment.origemAgendamento) && !appointment.email) {
         errors.push("E-mail valido e obrigatorio.");
     }
 

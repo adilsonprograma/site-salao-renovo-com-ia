@@ -14,7 +14,9 @@
     <script type="module" src="assets/scripts/app.js"></script>
 </head>
 <body>
+    <!-- Estrutura principal da pagina -->
     <div class="site-shell">
+        <!-- Navegacao fixa para as secoes principais -->
         <header class="site-header">
             <div class="page-wrapper">
                 <nav class="site-nav" aria-label="Menu principal">
@@ -28,7 +30,9 @@
             </div>
         </header>
 
+        <!-- Conteudo principal da landing page -->
         <main class="site-main page-wrapper" id="conteudo">
+            <!-- Hero com posicionamento da marca e acesso rapido ao chat -->
             <section class="hero" id="inicio">
                 <div class="hero__content">
                     <p class="eyebrow">Atelier de beleza em Russas</p>
@@ -90,14 +94,12 @@
                 </div>
             </section>
 
+            <!-- Galeria com carrossel para apresentar o ambiente -->
             <section class="gallery-showcase card" id="galeria">
                 <div class="gallery-showcase__intro">
                     <p class="section-label">Galeria sensorial</p>
                     <h2>Fotos, atmosfera e um carrossel para apresentar o salao com mais presenca.</h2>
-                    <p>
-                        Montei um destaque visual com cards e um carrossel que deixa a landing mais viva.
-                        A estrutura esta pronta para voce substituir ou acrescentar novas fotos quando quiser.
-                    </p>
+                    
 
                     <div class="showcase-notes">
                         <article class="showcase-note">
@@ -123,37 +125,37 @@
                         <div class="carousel__track" data-carousel-track>
                             <article class="carousel__slide is-active" data-carousel-slide>
                                 <figure class="carousel__media">
-                                    <img class="carousel__image carousel__image--wide" src="assets/images/renovo-salao.png" alt="Ambiente principal do Renovo Cabeleireiros" loading="lazy">
+                                    <img class="carousel__image carousel__image--wide" src="assets/images/20260328_102923.jpg" alt="Ambiente principal do Renovo Cabeleireiros"  loading="lazy" width="300">
                                 </figure>
 
                                 <div class="carousel__content">
                                     <p class="carousel__eyebrow">Ambiente</p>
                                     <h3>Recepcao acolhedora com atmosfera clara e elegante.</h3>
-                                    <p>Uma composicao visual que valoriza conforto, luz e sensacao de cuidado em cada atendimento.</p>
+                                    
                                 </div>
                             </article>
 
                             <article class="carousel__slide" data-carousel-slide>
                                 <figure class="carousel__media">
-                                    <img class="carousel__image carousel__image--left" src="assets/images/renovo-salao.png" alt="Detalhes internos do salao Renovo" loading="lazy">
+                                    <img class="carousel__image carousel__image--left" src="assets/images/20260328_102936.jpg" alt="Detalhes internos do salao Renovo" loading="lazy" width="300">
                                 </figure>
 
                                 <div class="carousel__content">
-                                    <p class="carousel__eyebrow">Coloracao</p>
-                                    <h3>Espaco pensado para loiros, morenas iluminadas e tecnicas de brilho.</h3>
-                                    <p>Use este slide para destacar servicos premium, transformacoes ou fotos de antes e depois.</p>
+                                    <p class="carousel__eyebrow">Manicure e pedicure</p>
+                                    <h3>Espaço dedicado ao cuidado das unhas e pés.</h3>
+                                   
                                 </div>
                             </article>
 
                             <article class="carousel__slide" data-carousel-slide>
                                 <figure class="carousel__media">
-                                    <img class="carousel__image carousel__image--right" src="assets/images/renovo-salao.png" alt="Espaco de atendimento e finalizacao do salao" loading="lazy">
+                                    <img class="carousel__image carousel__image--right" src="assets/images/20260328_102912.jpg" alt="Espaco de atendimento e finalizacao do salao" loading="lazy" width="300">
                                 </figure>
 
                                 <div class="carousel__content">
                                     <p class="carousel__eyebrow">Finalizacao</p>
                                     <h3>Apresente cortes, acabamento e pequenos rituais de autocuidado.</h3>
-                                    <p>O carrossel ficou com controles, autoplay suave e base pronta para receber novas fotos reais do salao.</p>
+                                    
                                 </div>
                             </article>
                         </div>
@@ -178,6 +180,7 @@
                 </div>
             </section>
 
+            <!-- Bloco institucional com servicos e posicionamento -->
             <section class="story card" id="sobre">
                 <div class="story__copy">
                     <p class="section-label">Conheca o espaco</p>
@@ -214,6 +217,7 @@
                 </div>
             </section>
 
+            <!-- Tabela simples com a disponibilidade geral do salao -->
             <section class="schedule card" id="horarios">
                 <div class="schedule__header">
                     <div>
@@ -249,6 +253,7 @@
                 </table>
             </section>
 
+            <!-- Area de contato com informacoes fixas e formulario -->
             <section class="contact card" id="contato">
                 <div class="contact__intro">
                     <div>
@@ -269,6 +274,7 @@
                         <h3>Escolha a melhor porta de entrada</h3>
                         <ul class="contact-panel__list">
                             <li>Use a ColorIA para montar um pre-agendamento.</li>
+                            <li>Fluxo pronto para Gemini no site e WhatsApp Cloud API.</li>
                             <li>Peca ajuda com cor, corte ou neutralizacao.</li>
                             <li>Envie o formulario ja com as informacoes organizadas.</li>
                         </ul>
@@ -276,9 +282,11 @@
 
                     <article class="contact-panel contact-panel--form">
                         <h3>Formulario de agendamento</h3>
+                        <!-- Formulario principal usado quando a cliente prefere enviar os dados completos -->
                         <form id="contactForm" class="contact-form" novalidate>
                             <input id="origemAgendamento" name="origemAgendamento" type="hidden" value="site_form">
 
+                            <!-- Campos estruturados para manter o payload da API previsivel -->
                             <div class="contact-form__grid">
                                 <input id="nome" name="nome" type="text" placeholder="Nome completo" autocomplete="name" aria-label="Nome completo" required>
                                 <input id="email" name="email" type="email" placeholder="E-mail" autocomplete="email" aria-label="E-mail" required>
@@ -318,15 +326,18 @@
             </section>
         </main>
 
+        <!-- Rodape institucional -->
         <footer class="site-footer page-wrapper">
             <p><strong>Renovo Cabeleireiros</strong> - Russas/CE</p>
         </footer>
     </div>
 
+    <!-- Botao flutuante que abre o chat em qualquer ponto da pagina -->
     <button class="fab-chat" id="fabChat" type="button" aria-controls="chatWidget" aria-expanded="false" aria-label="Abrir chat ColorIA">
         <span class="material-symbols-outlined" aria-hidden="true">smart_toy</span>
     </button>
 
+    <!-- Widget de conversa com a assistente -->
     <aside class="chat-widget" id="chatWidget" role="dialog" aria-labelledby="chatTitle" aria-hidden="true">
         <div class="chat-header">
             <div class="avatar" aria-hidden="true">
@@ -347,6 +358,7 @@
             <div class="message bot-message">Ola! Sou a ColorIA Agenda. Digite 1 para agendar, 2 para consultoria de cor ou 3 para tendencias de corte.</div>
         </div>
 
+        <!-- Entrada de texto usada tanto no modo local quanto no modo com API -->
         <div class="chat-input-area">
             <input type="text" id="userInput" class="chat-input" placeholder="Digite 1, 2, 3 ou sua pergunta..." autocomplete="off" aria-label="Digite sua mensagem">
             <button id="sendBtn" class="btn-send" type="button" aria-label="Enviar mensagem">
