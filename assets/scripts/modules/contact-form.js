@@ -147,6 +147,10 @@ export function initContactForm() {
 
     const submitButton = form.querySelector(".btn-submit");
 
+    if (Object.values(fields).some((field) => !field) || !submitButton) {
+        return;
+    }
+
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
 

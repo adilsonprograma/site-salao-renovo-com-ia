@@ -19,15 +19,20 @@ const contentTypes = {
 };
 
 function resolveStaticPath(pathname) {
-    const normalizedPath = pathname === "/" ? "/index.html" : pathname;
-    const decodedPath = decodeURIComponent(normalizedPath);
-    const filePath = path.normalize(path.join(rootDirectory, decodedPath));
+    try {
+        const normalizedPath = pathname === "/" ? "/index.html" : pathname;
+        const decodedPath = decodeURIComponent(normalizedPath);
+        const filePath = path.normalize(path.join(rootDirectory, decodedPath));
+        const relativePath = path.relative(rootDirectory, filePath);
 
-    if (!filePath.startsWith(rootDirectory)) {
+        if (relativePath.startsWith("..") || path.isAbsolute(relativePath)) {
+            return "";
+        }
+
+        return filePath;
+    } catch {
         return "";
     }
-
-    return filePath;
 }
 
 function serveStaticFile(filePath, request, response) {

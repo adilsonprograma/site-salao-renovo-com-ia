@@ -1,5 +1,5 @@
 const { config } = require("../config");
-const { saveAppointment, listAppointments } = require("../database");
+const { saveAppointment, listAppointments: listAppointmentsFromDatabase } = require("../database");
 const { validateAppointment } = require("../validation");
 const { notifySalonAboutAppointment } = require("./whatsapp");
 
@@ -46,7 +46,69 @@ async function createAppointment(payload) {
     };
 }
 
+function maskName(name) {
+    const normalized = String(name || "").trim();
+
+    if (!normalized) {
+        return "";
+    }
+
+    const parts = normalized.split(/\s+/);
+
+    if (parts.length === 1) {
+        return `${parts[0].slice(0, 1)}***`;
+    }
+
+    return `${parts[0]} ${parts[1].slice(0, 1)}.`;
+}
+
+function maskEmail(email) {
+    const normalized = String(email || "").trim();
+
+    if (!normalized || !normalized.includes("@")) {
+        return "";
+    }
+
+    const [localPart, domain] = normalized.split("@");
+    const visibleStart = localPart.slice(0, 2);
+    return `${visibleStart}***@${domain}`;
+}
+
+function maskPhone(phone) {
+    const digits = String(phone || "").replace(/\D/g, "");
+
+    if (digits.length < 4) {
+        return "***";
+    }
+
+    return `***${digits.slice(-4)}`;
+}
+
+function redactAppointment(appointment) {
+    return {
+        ...appointment,
+        bairro: "[protegido]",
+        cep: "[protegido]",
+        email: maskEmail(appointment.email),
+        localidade: "[protegido]",
+        logradouro: "[protegido]",
+        mensagem: "[protegido]",
+        nome: maskName(appointment.nome),
+        telefone: maskPhone(appointment.telefone)
+    };
+}
+
+function getAppointments({ includeSensitive = false, limit = 25 } = {}) {
+    const appointments = listAppointmentsFromDatabase(limit);
+
+    if (includeSensitive) {
+        return appointments;
+    }
+
+    return appointments.map((appointment) => redactAppointment(appointment));
+}
+
 module.exports = {
     createAppointment,
-    listAppointments
+    getAppointments
 };

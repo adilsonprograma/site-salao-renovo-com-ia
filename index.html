@@ -14,9 +14,7 @@
     <script type="module" src="assets/scripts/app.js"></script>
 </head>
 <body>
-    <!-- Estrutura principal da pagina -->
     <div class="site-shell">
-        <!-- Navegacao fixa para as secoes principais -->
         <header class="site-header">
             <div class="page-wrapper">
                 <nav class="site-nav" aria-label="Menu principal">
@@ -24,15 +22,14 @@
                     <a href="#galeria">Galeria</a>
                     <a href="#sobre">Sobre</a>
                     <a href="#horarios">Horarios</a>
+                    <a href="/admin.html" target="_blank" rel="noopener">Painel</a>
                     <a href="#contato">Contato</a>
                     <button type="button" id="navChatToggle" aria-controls="chatWidget" aria-expanded="false">Agenda &amp; ColorIA</button>
                 </nav>
             </div>
         </header>
 
-        <!-- Conteudo principal da landing page -->
         <main class="site-main page-wrapper" id="conteudo">
-            <!-- Hero com posicionamento da marca e acesso rapido ao chat -->
             <section class="hero" id="inicio">
                 <div class="hero__content">
                     <p class="eyebrow">Atelier de beleza em Russas</p>
@@ -45,6 +42,7 @@
 
                     <div class="hero__actions">
                         <a class="btn-hero btn-hero--primary" href="#contato">Reservar horario</a>
+                        <a class="btn-hero btn-hero--ghost" href="/admin.html" target="_blank" rel="noopener">Painel operacional</a>
                         <button type="button" class="btn-hero btn-hero--ghost" id="heroChatToggle">Abrir ColorIA</button>
                     </div>
 
@@ -85,7 +83,7 @@
                         <strong>Morena iluminada com acabamento glossy</strong>
                         <p>Visual sofisticado com transicao suave e brilho intenso.</p>
                     </article>
-                    
+
                     <article class="floating-card floating-card--bottom">
                         <p class="floating-card__label">ColorIA</p>
                         <strong>Agende, escolha a cor e explore cortes em alta.</strong>
@@ -94,18 +92,16 @@
                 </div>
             </section>
 
-            <!-- Galeria com carrossel para apresentar o ambiente -->
             <section class="gallery-showcase card" id="galeria">
                 <div class="gallery-showcase__intro">
                     <p class="section-label">Galeria sensorial</p>
                     <h2>Fotos, atmosfera e um carrossel para apresentar o salao com mais presenca.</h2>
-                    
 
                     <div class="showcase-notes">
                         <article class="showcase-note">
                             <span class="material-symbols-outlined" aria-hidden="true">auto_awesome</span>
                             <div>
-                                <strong>Lembraças</strong>
+                                <strong>Lembrancas</strong>
                                 <p>Melhores imagens para destacar o ambiente do salao.</p>
                             </div>
                         </article>
@@ -125,13 +121,12 @@
                         <div class="carousel__track" data-carousel-track>
                             <article class="carousel__slide is-active" data-carousel-slide>
                                 <figure class="carousel__media">
-                                    <img class="carousel__image carousel__image--wide" src="assets/images/20260328_102923.jpg" alt="Ambiente principal do Renovo Cabeleireiros"  loading="lazy" width="300">
+                                    <img class="carousel__image carousel__image--wide" src="assets/images/20260328_102923.jpg" alt="Ambiente principal do Renovo Cabeleireiros" loading="lazy" width="300">
                                 </figure>
 
                                 <div class="carousel__content">
                                     <p class="carousel__eyebrow">Ambiente</p>
                                     <h3>Recepcao acolhedora com atmosfera clara e elegante.</h3>
-                                    
                                 </div>
                             </article>
 
@@ -142,8 +137,7 @@
 
                                 <div class="carousel__content">
                                     <p class="carousel__eyebrow">Manicure e pedicure</p>
-                                    <h3>Espaço dedicado ao cuidado das unhas e pés.</h3>
-                                   
+                                    <h3>Espaco dedicado ao cuidado das unhas e pes.</h3>
                                 </div>
                             </article>
 
@@ -155,7 +149,6 @@
                                 <div class="carousel__content">
                                     <p class="carousel__eyebrow">Finalizacao</p>
                                     <h3>Apresente cortes, acabamento e pequenos rituais de autocuidado.</h3>
-                                    
                                 </div>
                             </article>
                         </div>
@@ -180,7 +173,6 @@
                 </div>
             </section>
 
-            <!-- Bloco institucional com servicos e posicionamento -->
             <section class="story card" id="sobre">
                 <div class="story__copy">
                     <p class="section-label">Conheca o espaco</p>
@@ -217,7 +209,6 @@
                 </div>
             </section>
 
-            <!-- Tabela simples com a disponibilidade geral do salao -->
             <section class="schedule card" id="horarios">
                 <div class="schedule__header">
                     <div>
@@ -235,25 +226,26 @@
                     </div>
                 </div>
 
-                <table class="schedule-table">
-                    <thead>
-                        <tr>
-                            <th>Segunda a sexta</th>
-                            <th>Sabados</th>
-                            <th>Feriados</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>08:30h - 18:30</td>
-                            <td>08:30h - 18:30</td>
-                            <td>08:30h - 15:00</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="schedule-table-wrapper">
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>Segunda a sexta</th>
+                                <th>Sabados</th>
+                                <th>Feriados</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>08:30h - 18:30</td>
+                                <td>08:30h - 18:30</td>
+                                <td>08:30h - 15:00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </section>
 
-            <!-- Area de contato com informacoes fixas e formulario -->
             <section class="contact card" id="contato">
                 <div class="contact__intro">
                     <div>
@@ -282,11 +274,9 @@
 
                     <article class="contact-panel contact-panel--form">
                         <h3>Formulario de agendamento</h3>
-                        <!-- Formulario principal usado quando a cliente prefere enviar os dados completos -->
                         <form id="contactForm" class="contact-form" novalidate>
                             <input id="origemAgendamento" name="origemAgendamento" type="hidden" value="site_form">
 
-                            <!-- Campos estruturados para manter o payload da API previsivel -->
                             <div class="contact-form__grid">
                                 <input id="nome" name="nome" type="text" placeholder="Nome completo" autocomplete="name" aria-label="Nome completo" required>
                                 <input id="email" name="email" type="email" placeholder="E-mail" autocomplete="email" aria-label="E-mail" required>
@@ -326,18 +316,15 @@
             </section>
         </main>
 
-        <!-- Rodape institucional -->
         <footer class="site-footer page-wrapper">
             <p><strong>Renovo Cabeleireiros</strong> - Russas/CE</p>
         </footer>
     </div>
 
-    <!-- Botao flutuante que abre o chat em qualquer ponto da pagina -->
     <button class="fab-chat" id="fabChat" type="button" aria-controls="chatWidget" aria-expanded="false" aria-label="Abrir chat ColorIA">
         <span class="material-symbols-outlined" aria-hidden="true">smart_toy</span>
     </button>
 
-    <!-- Widget de conversa com a assistente -->
     <aside class="chat-widget" id="chatWidget" role="dialog" aria-labelledby="chatTitle" aria-hidden="true">
         <div class="chat-header">
             <div class="avatar" aria-hidden="true">
@@ -358,7 +345,6 @@
             <div class="message bot-message">Ola! Sou a ColorIA Agenda. Digite 1 para agendar, 2 para consultoria de cor ou 3 para tendencias de corte.</div>
         </div>
 
-        <!-- Entrada de texto usada tanto no modo local quanto no modo com API -->
         <div class="chat-input-area">
             <input type="text" id="userInput" class="chat-input" placeholder="Digite 1, 2, 3 ou sua pergunta..." autocomplete="off" aria-label="Digite sua mensagem">
             <button id="sendBtn" class="btn-send" type="button" aria-label="Enviar mensagem">
@@ -366,6 +352,7 @@
             </button>
         </div>
     </aside>
-    <p class="site-footer page-wrapper">Desenvolvido por Adilson, inspirado na proposta do Renovo Cabeleireiros.</p>
+
+    <p class="site-credit page-wrapper">Desenvolvido por Adilson, inspirado na proposta do Renovo Cabeleireiros.</p>
 </body>
 </html>

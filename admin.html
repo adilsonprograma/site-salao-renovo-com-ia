@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Painel operacional do Renovo para visualizar agendamentos com acesso protegido por senha.">
+    <title>Painel Operacional | Renovo Cabeleireiros</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&family=Material+Symbols+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles/main.css">
+    <script type="module" src="assets/scripts/admin.js"></script>
+</head>
+<body class="admin-page">
+    <div class="site-shell">
+        <header class="site-header admin-topbar">
+            <div class="page-wrapper">
+                <nav class="site-nav" aria-label="Acoes do painel">
+                    <a href="/">Voltar ao site</a>
+                    <span class="admin-badge">Painel operacional protegido</span>
+                </nav>
+            </div>
+        </header>
+
+        <main class="site-main page-wrapper">
+            <section class="admin-auth card" id="adminLoginArea">
+                <p class="section-label">Acesso interno</p>
+                <h1>Painel operacional</h1>
+                <p>Entre com a senha para visualizar agendamentos completos em uma aba separada.</p>
+                <p class="appointments-note">Senha padrao local: <code>0000</code>. Se quiser, altere por variavel de ambiente.</p>
+
+                <form id="adminLoginForm" class="admin-login-form" novalidate>
+                    <label for="adminPassword">Senha</label>
+                    <input
+                        id="adminPassword"
+                        name="adminPassword"
+                        type="password"
+                        inputmode="numeric"
+                        autocomplete="current-password"
+                        placeholder="Digite a senha"
+                        required
+                    >
+                    <button type="submit" class="btn-form btn-submit">Entrar no painel</button>
+                </form>
+
+                <p id="adminLoginStatus" class="form-status" role="status" aria-live="polite"></p>
+            </section>
+
+            <section class="appointments card" id="adminPanelArea" hidden>
+                <div class="appointments__header">
+                    <div>
+                        <p class="section-label">Operacao diaria</p>
+                        <h2>Agendamentos completos</h2>
+                        <p>Visualizacao com dados sensiveis para uso interno da equipe.</p>
+                    </div>
+
+                    <div class="appointments__controls">
+                        <label for="adminLimit">Exibir</label>
+                        <select id="adminLimit" aria-label="Quantidade de agendamentos">
+                            <option value="8">8</option>
+                            <option value="12" selected>12</option>
+                            <option value="20">20</option>
+                            <option value="40">40</option>
+                        </select>
+                        <button type="button" class="btn-form btn-submit" id="adminRefreshBtn">Atualizar</button>
+                        <button type="button" class="btn-form btn-reset" id="adminLogoutBtn">Sair</button>
+                    </div>
+                </div>
+
+                <p id="adminAuthStatus" class="form-status" role="status" aria-live="polite"></p>
+                <p id="adminListStatus" class="form-status" role="status" aria-live="polite"></p>
+                <ul id="adminAppointmentsList" class="appointments-list" aria-label="Lista interna de agendamentos"></ul>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

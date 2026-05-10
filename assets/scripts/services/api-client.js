@@ -4,10 +4,18 @@ function getApiBaseUrl() {
         return "";
     }
 
+    if (window.location.protocol === "file:") {
+        return "http://localhost:3000";
+    }
+
+    const localHosts = new Set(["localhost", "127.0.0.1", "::1", "[::1]"]);
+
     // Quando a pagina esta em outro servidor local, sempre apontamos para a API Node HTTP na porta padrao.
-    if (["localhost", "127.0.0.1"].includes(window.location.hostname)) {
+    if (localHosts.has(window.location.hostname)) {
         if (window.location.port !== "3000") {
-            return `http://${window.location.hostname}:3000`;
+            const localApiUrl = new URL(window.location.origin);
+            localApiUrl.port = "3000";
+            return localApiUrl.origin;
         }
     }
 
@@ -19,7 +27,10 @@ async function requestJson(url, options = {}) {
     let response;
 
     try {
-        response = await fetch(requestUrl, options);
+        response = await fetch(requestUrl, {
+            credentials: "include",
+            ...options
+        });
     } catch (error) {
         throw new Error("Nao consegui alcancar a API de agendamento. Execute 'node server.js' e abra o projeto em http://localhost:3000.");
     }
@@ -39,6 +50,44 @@ async function requestJson(url, options = {}) {
 
 export function fetchIntegrations() {
     return requestJson("/api/integrations");
+}
+
+export function fetchAppointments({ limit = 20, sensitive = false } = {}) {
+    const safeLimit = Math.max(1, Math.min(Number(limit) || 20, 100));
+    const searchParams = new URLSearchParams({
+        limit: String(safeLimit)
+    });
+
+    if (sensitive) {
+        searchParams.set("sensitive", "1");
+    }
+
+    return requestJson(`/api/appointments?${searchParams.toString()}`);
+}
+
+export function fetchAdminAppointments({ limit = 20 } = {}) {
+    const safeLimit = Math.max(1, Math.min(Number(limit) || 20, 100));
+    return requestJson(`/api/admin/appointments?limit=${safeLimit}`);
+}
+
+export function loginAdmin(password) {
+    return requestJson("/api/admin/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ password })
+    });
+}
+
+export function logoutAdmin() {
+    return requestJson("/api/admin/logout", {
+        method: "POST"
+    });
+}
+
+export function fetchAdminSession() {
+    return requestJson("/api/admin/session");
 }
 
 export function saveAppointment(payload) {

@@ -1,6 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { DatabaseSync } = require("node:sqlite");
+const { decryptText, encryptText } = require("./security/encryption");
 
 const dataDirectory = path.join(process.cwd(), "data");
 const databaseFile = process.env.DATABASE_FILE
@@ -85,20 +86,36 @@ const listAppointmentsStatement = database.prepare(`
 
 function saveAppointment(appointment) {
     const createdAt = new Date().toISOString();
+    const encryptedAppointment = {
+        ...appointment,
+        assunto: encryptText(appointment.assunto),
+        bairro: encryptText(appointment.bairro),
+        cep: encryptText(appointment.cep),
+        dataPreferencial: encryptText(appointment.dataPreferencial),
+        email: encryptText(appointment.email),
+        horarioPreferencial: encryptText(appointment.horarioPreferencial),
+        localidade: encryptText(appointment.localidade),
+        logradouro: encryptText(appointment.logradouro),
+        mensagem: encryptText(appointment.mensagem),
+        nome: encryptText(appointment.nome),
+        servico: encryptText(appointment.servico),
+        telefone: encryptText(appointment.telefone)
+    };
+
     const result = insertAppointmentStatement.run(
-        appointment.nome,
-        appointment.email,
-        appointment.telefone,
-        appointment.servico,
-        appointment.dataPreferencial,
-        appointment.horarioPreferencial,
-        appointment.cep,
-        appointment.logradouro,
-        appointment.bairro,
-        appointment.localidade,
-        appointment.assunto,
-        appointment.mensagem,
-        appointment.origemAgendamento,
+        encryptedAppointment.nome,
+        encryptedAppointment.email,
+        encryptedAppointment.telefone,
+        encryptedAppointment.servico,
+        encryptedAppointment.dataPreferencial,
+        encryptedAppointment.horarioPreferencial,
+        encryptedAppointment.cep,
+        encryptedAppointment.logradouro,
+        encryptedAppointment.bairro,
+        encryptedAppointment.localidade,
+        encryptedAppointment.assunto,
+        encryptedAppointment.mensagem,
+        encryptedAppointment.origemAgendamento,
         "novo",
         createdAt
     );
@@ -111,13 +128,34 @@ function saveAppointment(appointment) {
     };
 }
 
+function decodeAppointmentRow(row) {
+    return {
+        ...row,
+        assunto: decryptText(row.assunto),
+        bairro: decryptText(row.bairro),
+        cep: decryptText(row.cep),
+        dataPreferencial: decryptText(row.dataPreferencial),
+        email: decryptText(row.email),
+        horarioPreferencial: decryptText(row.horarioPreferencial),
+        localidade: decryptText(row.localidade),
+        logradouro: decryptText(row.logradouro),
+        mensagem: decryptText(row.mensagem),
+        nome: decryptText(row.nome),
+        servico: decryptText(row.servico),
+        telefone: decryptText(row.telefone)
+    };
+}
+
 function listAppointments(limit = 25) {
     const safeLimit = Math.max(1, Math.min(Number(limit) || 25, 100));
 
-    return listAppointmentsStatement.all(safeLimit).map((row) => ({
-        ...row,
-        id: Number(row.id)
-    }));
+    return listAppointmentsStatement
+        .all(safeLimit)
+        .map((row) => decodeAppointmentRow(row))
+        .map((row) => ({
+            ...row,
+            id: Number(row.id)
+        }));
 }
 
 module.exports = {

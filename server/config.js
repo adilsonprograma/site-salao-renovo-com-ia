@@ -22,6 +22,15 @@ const whatsappPhoneNumberId = readEnv("WHATSAPP_PHONE_NUMBER_ID");
 const config = {
     appName: "Renovo Cabeleireiros",
     port: readNumberEnv("PORT", 3000),
+    admin: {
+        panelPassword: readEnv("ADMIN_PANEL_PASSWORD", "0000"),
+        sessionTtlHours: readNumberEnv("ADMIN_SESSION_TTL_HOURS", 8)
+    },
+    security: {
+        dataEncryptionKey: readEnv("DATA_ENCRYPTION_KEY"),
+        dataEncryptionKeyFile: readEnv("DATA_ENCRYPTION_KEY_FILE"),
+        dataEncryptionSalt: readEnv("DATA_ENCRYPTION_SALT", "renovo-coloria")
+    },
     gemini: {
         apiKey: geminiApiKey,
         apiVersion: readEnv("GEMINI_API_VERSION", "v1beta"),
@@ -49,6 +58,16 @@ function getIntegrationStatus() {
             hasAdminRecipient: Boolean(config.whatsapp.notifyTo),
             webhookConfigured: Boolean(config.whatsapp.enabled && config.whatsapp.verifyToken),
             phoneNumberId: config.whatsapp.phoneNumberId || ""
+        },
+        security: {
+            dataEncryptionConfigured: true,
+            dataEncryptionKeySource: config.security.dataEncryptionKey
+                ? "env"
+                : (config.security.dataEncryptionKeyFile ? "custom_file" : "managed_file")
+        },
+        admin: {
+            panelEnabled: true,
+            sessionTtlHours: config.admin.sessionTtlHours
         }
     };
 }

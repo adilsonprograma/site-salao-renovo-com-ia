@@ -40,6 +40,37 @@ Uso de cada variavel:
 - `WHATSAPP_GRAPH_VERSION`: versao da Graph API usada nas chamadas
 - `WHATSAPP_NOTIFY_TO`: numero opcional que recebe notificacoes de novos agendamentos
 
+## Protecao de dados no banco
+
+Variaveis opcionais:
+
+```text
+DATA_ENCRYPTION_KEY=uma-chave-forte
+DATA_ENCRYPTION_KEY_FILE=./data/.renovo-data.key
+DATA_ENCRYPTION_SALT=renovo-coloria
+```
+
+Comportamento:
+
+- se `DATA_ENCRYPTION_KEY` existir, ela sera usada para derivar a chave AES-256-GCM
+- se nao existir, o sistema cria e usa automaticamente `data/.renovo-data.key`
+- campos sensiveis (nome, email, telefone, endereco e mensagem) sao criptografados em repouso no SQLite
+
+## Painel operacional
+
+Variaveis opcionais:
+
+```text
+ADMIN_PANEL_PASSWORD=0000
+ADMIN_SESSION_TTL_HOURS=8
+```
+
+Comportamento:
+
+- o painel administrativo fica em `http://localhost:3000/admin.html`
+- o backend exige autenticacao para visualizar dados sensiveis dos agendamentos
+- a senha padrao local e `0000` (recomendado trocar em producao)
+
 ## Endpoints envolvidos
 
 - `GET /webhooks/whatsapp`: validacao da assinatura inicial do webhook
