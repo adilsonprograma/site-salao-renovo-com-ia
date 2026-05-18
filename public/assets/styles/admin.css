@@ -1,0 +1,493 @@
+/* ============================================================================
+   ESTILOS DO PAINEL ADMINISTRATIVO
+   ========================================================================= */
+
+.admin-body::before {
+    background: rgba(149, 166, 63, 0.22);
+}
+
+.admin-body::after {
+    background: rgba(111, 125, 25, 0.12);
+}
+
+.admin-main {
+    gap: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-header .site-nav {
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* ============================================================================
+   BOTÃO DE LOGOUT
+   ========================================================================= */
+
+.admin-logout-btn {
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    background: rgba(176, 0, 32, 0.1);
+    color: var(--danger);
+    border: 1px solid var(--danger);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.admin-logout-btn:hover {
+    background: var(--danger);
+    color: white;
+}
+
+/* ============================================================================
+   HERO DO ADMIN
+   ========================================================================= */
+
+.admin-hero {
+    display: grid;
+    gap: 20px;
+}
+
+.admin-hero__copy {
+    display: grid;
+    gap: 12px;
+    max-width: 64ch;
+}
+
+.admin-hero__lead {
+    color: var(--muted);
+    font-size: 1.02rem;
+    margin: 0;
+}
+
+.admin-user-greeting {
+    font-size: 14px;
+    color: var(--brand);
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+/* ============================================================================
+   TOOLBAR DO ADMIN
+   ========================================================================= */
+
+.admin-toolbar {
+    display: grid;
+    gap: 14px;
+    align-items: end;
+}
+
+.admin-control {
+    display: grid;
+    gap: 8px;
+    max-width: 240px;
+    font-weight: 700;
+}
+
+.admin-control span {
+    color: var(--brand-deep);
+    font-size: 0.9rem;
+}
+
+.admin-control select {
+    min-height: 48px;
+    padding: 0 14px;
+    border: 1px solid rgba(78, 85, 62, 0.14);
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.92);
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.admin-control select:focus {
+    outline: none;
+    border-color: var(--brand);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(111, 125, 25, 0.1);
+}
+
+/* ============================================================================
+   GRID DE ESTATÍSTICAS
+   ========================================================================= */
+
+.admin-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.admin-stat {
+    display: grid;
+    gap: 8px;
+    min-height: 170px;
+    padding: 24px;
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.admin-stat__label {
+    color: var(--brand-deep);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.admin-stat strong {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 0.95;
+    margin: 0;
+}
+
+.admin-stat p:last-child {
+    color: var(--muted);
+    margin: 0;
+    font-size: 14px;
+}
+
+/* ============================================================================
+   PAINEL DO ADMIN
+   ========================================================================= */
+
+.admin-panel {
+    display: grid;
+    gap: 18px;
+}
+
+.admin-panel__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.admin-panel__header > div {
+    flex: 1;
+    min-width: 200px;
+}
+
+.admin-panel__header p {
+    margin: 0;
+}
+
+.admin-panel__header h2 {
+    margin: 0;
+}
+
+.admin-link {
+    white-space: nowrap;
+}
+
+/* ============================================================================
+   LISTA DE INTEGRACOES
+   ========================================================================= */
+
+.integration-list {
+    display: grid;
+    gap: 12px;
+}
+
+.integration-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: rgba(111, 125, 25, 0.06);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--brand);
+    transition: all 0.3s ease;
+}
+
+.integration-card:hover {
+    background: rgba(111, 125, 25, 0.12);
+    transform: translateX(4px);
+}
+
+.integration-icon {
+    font-size: 32px;
+    color: var(--brand);
+    flex-shrink: 0;
+}
+
+.integration-info {
+    flex: 1;
+}
+
+.integration-info h3 {
+    margin: 0 0 4px 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.integration-info p:last-child {
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.integration-status {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.integration-status--ativo {
+    color: #4caf50;
+}
+
+.integration-status--verificar {
+    color: #ff9800;
+}
+
+/* ============================================================================
+   LISTA DE AGENDAMENTOS
+   ========================================================================= */
+
+.appointments-list {
+    display: grid;
+    gap: 16px;
+}
+
+.appointment-card {
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    transition: all 0.3s ease;
+}
+
+.appointment-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border-color: var(--brand);
+}
+
+.appointment-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+}
+
+.appointment-card__header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.appointment-card__date {
+    margin: 4px 0 0 0;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.appointment-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.btn-whatsapp {
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    background: #25d366;
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-whatsapp:hover {
+    background: #1fa356;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+.btn-whatsapp:disabled {
+    cursor: wait;
+    opacity: 0.75;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-whatsapp--secondary {
+    background: rgba(72, 84, 16, 0.1);
+    color: var(--brand-deep);
+    border: 1px solid rgba(72, 84, 16, 0.24);
+}
+
+.btn-whatsapp--secondary:hover {
+    background: rgba(72, 84, 16, 0.16);
+    color: var(--brand-deep);
+}
+
+.appointment-card__content {
+    display: grid;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.appointment-card__content p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.appointment-card__content strong {
+    color: var(--brand-deep);
+    font-weight: 600;
+}
+
+/* ============================================================================
+   ESTADO VAZIO
+   ========================================================================= */
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--muted);
+    font-size: 15px;
+}
+
+/* ============================================================================
+   MODAL
+   ========================================================================= */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    padding: 32px;
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: var(--card-shadow);
+}
+
+.modal-content h2 {
+    margin: 0 0 12px 0;
+    font-size: 20px;
+    color: var(--ink);
+}
+
+.modal-content p {
+    margin: 0 0 24px 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.btn-modal {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+.btn-modal--cancel {
+    background: var(--line);
+    color: var(--ink);
+}
+
+.btn-modal--cancel:hover {
+    background: rgba(48, 54, 34, 0.2);
+}
+
+.btn-modal--confirm {
+    background: var(--danger);
+    color: white;
+}
+
+.btn-modal--confirm:hover {
+    background: #8b0019;
+    box-shadow: 0 4px 12px rgba(176, 0, 32, 0.3);
+}
+
+/* ============================================================================
+   RESPONSIVIDADE
+   ========================================================================= */
+
+@media (max-width: 768px) {
+    .admin-panel__header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-link {
+        width: 100%;
+        text-align: center;
+    }
+
+    .appointment-card__header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .appointment-card__actions {
+        width: 100%;
+    }
+
+    .btn-whatsapp {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-stat {
+        min-height: 140px;
+        padding: 16px;
+    }
+
+    .modal-content {
+        padding: 24px;
+    }
+}

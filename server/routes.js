@@ -1,9 +1,16 @@
 const { URL } = require("node:url");
+const {
+    buildExpiredSessionCookie,
+    buildSessionCookie,
+    getAdminSession,
+    loginAdmin,
+    logoutAdmin
+} = require("./auth");
 const { databaseFile } = require("./database");
 const { getIntegrationStatus } = require("./config");
 const { readJsonBody, sendJson, sendNoContent, sendText } = require("./http");
 const { resolveStaticPath, serveStaticFile } = require("./static-server");
-const { createAppointment, listAppointments } = require("./services/appointments");
+const { createAppointment, listAppointments, notifyExistingAppointment } = require("./services/appointments");
 const { processWhatsAppWebhookPayload, runAssistantTurn } = require("./services/assistant");
 const { verifyWhatsAppWebhook } = require("./services/whatsapp");
 
@@ -64,8 +71,113 @@ async function handleAssistantChat(request, response) {
     sendJson(response, 200, result);
 }
 
+async function handleAdminLogin(request, response) {
+    const payload = await readJsonBody(request);
+    const username = String(payload.username || "").trim();
+    const password = String(payload.password || "").trim();
+
+    if (!username || !password) {
+        sendJson(response, 400, {
+            message: "Usuario e senha sao obrigatorios."
+        });
+        return;
+    }
+
+    const result = loginAdmin(username, password);
+
+    if (!result.success) {
+        sendJson(response, 401, {
+            message: result.message
+        });
+        return;
+    }
+
+    sendJson(response, 200, {
+        message: result.message
+    }, {
+        "Set-Cookie": buildSessionCookie(result.session.sessionId)
+    });
+}
+
+function handleAdminLogout(request, response) {
+    logoutAdmin(request);
+
+    sendJson(response, 200, {
+        message: "Logout realizado com sucesso."
+    }, {
+        "Set-Cookie": buildExpiredSessionCookie()
+    });
+}
+
+function requireAdminSessionOrReply(request, response) {
+    const session = getAdminSession(request);
+
+    if (!session) {
+        sendJson(response, 401, {
+            message: "Nao autenticado. Faca login para continuar."
+        });
+        return null;
+    }
+
+    return session;
+}
+
+function handleAdminStatus(request, response) {
+    const session = requireAdminSessionOrReply(request, response);
+
+    if (!session) {
+        return;
+    }
+
+    sendJson(response, 200, {
+        authenticated: true,
+        user: {
+            username: session.username
+        }
+    });
+}
+
+function handleAdminAppointmentsList(requestUrl, request, response) {
+    const session = requireAdminSessionOrReply(request, response);
+
+    if (!session) {
+        return;
+    }
+
+    sendJson(response, 200, {
+        appointments: listAppointments(requestUrl.searchParams.get("limit")),
+        user: {
+            username: session.username
+        }
+    });
+}
+
+async function handleAdminAppointmentNotify(request, response, appointmentId) {
+    const session = requireAdminSessionOrReply(request, response);
+
+    if (!session) {
+        return;
+    }
+
+    const result = await notifyExistingAppointment(appointmentId);
+
+    if (!result.ok) {
+        sendJson(response, 404, {
+            message: result.message
+        });
+        return;
+    }
+
+    sendJson(response, 200, {
+        appointment: result.appointment,
+        message: result.message,
+        notification: result.notification
+    });
+}
+
 async function routeRequest(request, response) {
     const requestUrl = getRequestUrl(request);
+    const pathParts = requestUrl.pathname.split("/").filter(Boolean);
     applyCorsHeaders(request, response, requestUrl.pathname);
 
     if (request.method === "OPTIONS") {
@@ -101,6 +213,38 @@ async function routeRequest(request, response) {
 
     if (requestUrl.pathname === "/api/assistant/chat" && request.method === "POST") {
         await handleAssistantChat(request, response);
+        return;
+    }
+
+    if (requestUrl.pathname === "/api/admin/login" && request.method === "POST") {
+        await handleAdminLogin(request, response);
+        return;
+    }
+
+    if (requestUrl.pathname === "/api/admin/logout" && request.method === "POST") {
+        handleAdminLogout(request, response);
+        return;
+    }
+
+    if (requestUrl.pathname === "/api/admin/status" && request.method === "GET") {
+        handleAdminStatus(request, response);
+        return;
+    }
+
+    if (requestUrl.pathname === "/api/admin/appointments" && request.method === "GET") {
+        handleAdminAppointmentsList(requestUrl, request, response);
+        return;
+    }
+
+    if (
+        pathParts.length === 5
+        && pathParts[0] === "api"
+        && pathParts[1] === "admin"
+        && pathParts[2] === "appointments"
+        && pathParts[4] === "notify"
+        && request.method === "POST"
+    ) {
+        await handleAdminAppointmentNotify(request, response, pathParts[3]);
         return;
     }
 

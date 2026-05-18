@@ -1,15 +1,17 @@
 // Reune helpers HTTP para reduzir repeticao nas rotas.
-function sendJson(response, statusCode, payload) {
+function sendJson(response, statusCode, payload, extraHeaders = {}) {
     response.writeHead(statusCode, {
-        "Content-Type": "application/json; charset=utf-8"
+        "Content-Type": "application/json; charset=utf-8",
+        ...extraHeaders
     });
 
     response.end(JSON.stringify(payload, null, 2));
 }
 
-function sendText(response, statusCode, message) {
+function sendText(response, statusCode, message, extraHeaders = {}) {
     response.writeHead(statusCode, {
-        "Content-Type": "text/plain; charset=utf-8"
+        "Content-Type": "text/plain; charset=utf-8",
+        ...extraHeaders
     });
 
     response.end(message);

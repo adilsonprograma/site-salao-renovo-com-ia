@@ -83,6 +83,28 @@ const listAppointmentsStatement = database.prepare(`
     LIMIT ?
 `);
 
+const getAppointmentByIdStatement = database.prepare(`
+    SELECT
+        id,
+        client_name AS nome,
+        email,
+        phone AS telefone,
+        service AS servico,
+        preferred_date AS dataPreferencial,
+        preferred_time AS horarioPreferencial,
+        cep,
+        street AS logradouro,
+        neighborhood AS bairro,
+        city_state AS localidade,
+        subject AS assunto,
+        message AS mensagem,
+        source AS origemAgendamento,
+        status,
+        created_at AS criadoEm
+    FROM appointments
+    WHERE id = ?
+`);
+
 function saveAppointment(appointment) {
     const createdAt = new Date().toISOString();
     const result = insertAppointmentStatement.run(
@@ -120,8 +142,28 @@ function listAppointments(limit = 25) {
     }));
 }
 
+function getAppointmentById(id) {
+    const numericId = Number(id);
+
+    if (!Number.isInteger(numericId) || numericId <= 0) {
+        return null;
+    }
+
+    const row = getAppointmentByIdStatement.get(numericId);
+
+    if (!row) {
+        return null;
+    }
+
+    return {
+        ...row,
+        id: Number(row.id)
+    };
+}
+
 module.exports = {
     databaseFile,
+    getAppointmentById,
     listAppointments,
     saveAppointment
 };

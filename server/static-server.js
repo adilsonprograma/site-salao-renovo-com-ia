@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { sendText } = require("./http");
 
-const rootDirectory = process.cwd();
+const publicDirectory = path.resolve(process.cwd(), "public");
 
 const contentTypes = {
     ".css": "text/css; charset=utf-8",
@@ -21,9 +21,9 @@ const contentTypes = {
 function resolveStaticPath(pathname) {
     const normalizedPath = pathname === "/" ? "/index.html" : pathname;
     const decodedPath = decodeURIComponent(normalizedPath);
-    const filePath = path.normalize(path.join(rootDirectory, decodedPath));
+    const filePath = path.resolve(publicDirectory, `.${decodedPath}`);
 
-    if (!filePath.startsWith(rootDirectory)) {
+    if (filePath !== publicDirectory && !filePath.startsWith(`${publicDirectory}${path.sep}`)) {
         return "";
     }
 

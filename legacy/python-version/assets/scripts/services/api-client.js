@@ -41,6 +41,20 @@ export function fetchIntegrations() {
     return requestJson("/api/integrations");
 }
 
+export function fetchAppointments(limit = 25) {
+    const params = new URLSearchParams({
+        limit: String(limit)
+    });
+
+    return requestJson(`/api/appointments?${params.toString()}`);
+}
+
+export function resendAppointmentNotification(appointmentId) {
+    return requestJson(`/api/admin/appointments/${appointmentId}/notify`, {
+        method: "POST"
+    });
+}
+
 export function saveAppointment(payload) {
     return requestJson("/api/appointments", {
         method: "POST",

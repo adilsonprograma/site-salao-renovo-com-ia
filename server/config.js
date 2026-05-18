@@ -21,6 +21,12 @@ const whatsappPhoneNumberId = readEnv("WHATSAPP_PHONE_NUMBER_ID");
 
 const config = {
     appName: "Renovo Cabeleireiros",
+    admin: {
+        password: readEnv("ADMIN_PASSWORD", "admin123"),
+        sessionCookieName: "admin_session_id",
+        sessionDurationMs: readNumberEnv("ADMIN_SESSION_DURATION_MS", 1000 * 60 * 60 * 2),
+        username: readEnv("ADMIN_USERNAME", "admin")
+    },
     port: readNumberEnv("PORT", 3000),
     gemini: {
         apiKey: geminiApiKey,

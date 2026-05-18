@@ -6,28 +6,32 @@ Landing page institucional com:
 - chat de atendimento com modo local ou Gemini
 - webhook e envio de mensagens via WhatsApp Cloud API
 - front-end e back-end separados por responsabilidade
+- painel admin com autenticacao por cookie HttpOnly
 
 ## Estrutura principal
 
 ```text
 .
-|-- assets/
-|   |-- images/
-|   |-- scripts/
-|   |   |-- app.js
-|   |   |-- modules/
-|   |   |   |-- chat-widget.js
-|   |   |   |-- contact-form.js
-|   |   |   `-- gallery-carousel.js
-|   |   `-- services/
-|   |       `-- api-client.js
-|   `-- styles/
-|       `-- main.css
 |-- data/
 |-- docs/
 |   |-- ARQUITETURA.md
-|   `-- CONFIGURACAO_APIS.md
+|   |-- CONFIGURACAO_APIS.md
+|   `-- API.md
+|-- legacy/
+|   `-- python-version/
+|-- notes/
+|   |-- guides/
+|   `-- history/
+|-- public/
+|   |-- assets/
+|   |   |-- images/
+|   |   |-- scripts/
+|   |   `-- styles/
+|   |-- admin.html
+|   |-- index.html
+|   `-- login.html
 |-- server/
+|   |-- auth.js
 |   |-- services/
 |   |   |-- appointments.js
 |   |   |-- assistant.js
@@ -40,7 +44,6 @@ Landing page institucional com:
 |   |-- routes.js
 |   |-- static-server.js
 |   `-- validation.js
-|-- index.html
 |-- package.json
 `-- server.js
 ```
@@ -79,6 +82,11 @@ No PowerShell deste ambiente o `npm.ps1` pode estar bloqueado por politica de ex
 - `GET /api/appointments`: lista agendamentos recentes
 - `POST /api/appointments`: salva um agendamento manual
 - `POST /api/assistant/chat`: conversa com a ColorIA pelo site
+- `POST /api/admin/login`: inicia sessao do painel admin
+- `POST /api/admin/logout`: encerra a sessao do painel admin
+- `GET /api/admin/status`: valida a sessao atual
+- `GET /api/admin/appointments`: lista protegida do painel
+- `POST /api/admin/appointments/:id/notify`: reenfileira a notificacao do agendamento
 - `GET /webhooks/whatsapp`: verificacao do webhook da Meta
 - `POST /webhooks/whatsapp`: recebe mensagens do WhatsApp Cloud API
 
@@ -89,7 +97,10 @@ No PowerShell deste ambiente o `npm.ps1` pode estar bloqueado por politica de ex
 
 Veja os detalhes em `docs/CONFIGURACAO_APIS.md`.
 
-## Documentacao interna
+## Pastas de apoio
 
 - `docs/ARQUITETURA.md`
+- `docs/API.md`
 - `docs/CONFIGURACAO_APIS.md`
+- `notes/guides/`
+- `legacy/python-version/`

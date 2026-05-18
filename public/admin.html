@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Painel administrativo de agendamentos do Renovo Cabeleireiros.">
+    <title>Admin | Renovo Cabeleireiros</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&family=Material+Symbols+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles/main.css">
+    <link rel="stylesheet" href="assets/styles/admin.css">
+    <script type="module" src="assets/scripts/admin-protected.js"></script>
+</head>
+<body class="admin-body">
+    <div class="site-shell">
+        <header class="site-header admin-header">
+            <div class="page-wrapper">
+                <nav class="site-nav" aria-label="Navegacao administrativa">
+                    <a href="index.html">Voltar ao site</a>
+                    <a href="#agendamentos">Agendamentos</a>
+                    <a href="#integracoes">Integracoes</a>
+                    <button type="button" id="refreshButton">Atualizar painel</button>
+                    <button type="button" id="logoutButton" class="admin-logout-btn">Sair</button>
+                </nav>
+            </div>
+        </header>
+
+        <main class="site-main page-wrapper admin-main">
+            <section class="card admin-hero">
+                <div class="admin-hero__copy">
+                    <p class="section-label">Painel interno</p>
+                    <h1>Agendamentos e reenvio rapido para WhatsApp.</h1>
+                    <p class="admin-hero__lead">
+                        Veja os pedidos recentes, acompanhe o estado das integracoes e reenvie um agendamento
+                        para o numero administrativo configurado no backend.
+                    </p>
+                    <p id="userGreeting" class="admin-user-greeting"></p>
+                </div>
+
+                <div class="admin-toolbar">
+                    <label class="admin-control" for="limitSelect">
+                        <span>Quantidade exibida</span>
+                        <select id="limitSelect">
+                            <option value="10">10</option>
+                            <option value="25" selected>25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </label>
+
+                    <p id="adminStatus" class="form-status" role="status" aria-live="polite"></p>
+                </div>
+            </section>
+
+            <section class="admin-grid" aria-label="Resumo do painel">
+                <article class="card admin-stat">
+                    <p class="admin-stat__label">Agendamentos carregados</p>
+                    <strong id="totalAppointments">0</strong>
+                    <p>Quantidade atual retornada pela API.</p>
+                </article>
+
+                <article class="card admin-stat">
+                    <p class="admin-stat__label">Com telefone</p>
+                    <strong id="appointmentsWithPhone">0</strong>
+                    <p>Pedidos prontos para contato ou retorno.</p>
+                </article>
+
+                <article class="card admin-stat">
+                    <p class="admin-stat__label">Ultimo registro</p>
+                    <strong id="latestAppointmentDate">-</strong>
+                    <p>Data mais recente entre os agendamentos listados.</p>
+                </article>
+            </section>
+
+            <section class="card admin-panel" id="integracoes">
+                <div class="admin-panel__header">
+                    <div>
+                        <p class="section-label">Infraestrutura</p>
+                        <h2>Status das integracoes</h2>
+                    </div>
+                </div>
+
+                <div id="integrationList" class="integration-list" aria-live="polite"></div>
+            </section>
+
+            <section class="card admin-panel" id="agendamentos">
+                <div class="admin-panel__header">
+                    <div>
+                        <p class="section-label">Operacao</p>
+                        <h2>Agendamentos recentes</h2>
+                    </div>
+
+                    <a class="btn-hero btn-hero--ghost admin-link" href="/api/admin/appointments?limit=100" target="_blank" rel="noreferrer">
+                        Ver JSON da API
+                    </a>
+                </div>
+
+                <div id="appointmentsList" class="appointments-list" aria-live="polite"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal de confirmação de logout -->
+    <div id="logoutModal" class="modal" style="display: none;" role="alertdialog" aria-labelledby="logoutModalTitle">
+        <div class="modal-content card">
+            <h2 id="logoutModalTitle">Fazer logout?</h2>
+            <p>Você será desconectado da sessão administrativa.</p>
+            <div class="modal-actions">
+                <button type="button" class="btn-modal btn-modal--cancel" id="cancelLogoutBtn">Cancelar</button>
+                <button type="button" class="btn-modal btn-modal--confirm" id="confirmLogoutBtn">Confirmar logout</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

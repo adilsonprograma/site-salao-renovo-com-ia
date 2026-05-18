@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Acesso ao painel administrativo do Renovo Cabeleireiros.">
+    <title>Login | Renovo Cabeleireiros - Admin</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&family=Material+Symbols+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles/main.css">
+    <link rel="stylesheet" href="assets/styles/login.css">
+    <script type="module" src="assets/scripts/login.js"></script>
+</head>
+<body class="login-body">
+    <div class="site-shell">
+        <!-- Header simplificado -->
+        <header class="site-header login-header">
+            <div class="page-wrapper">
+                <nav class="site-nav" aria-label="Navegacao">
+                    <a href="index.html">← Voltar ao site</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Conteudo principal de login -->
+        <main class="site-main login-main page-wrapper" id="conteudo">
+            <section class="login-container">
+                <article class="login-card card">
+                    <div class="login-card__header">
+                        <p class="section-label">Acesso administrativo</p>
+                        <h1>Painel Admin</h1>
+                        <p class="login-card__description">Faça login para acessar o painel de agendamentos e integracoes.</p>
+                    </div>
+
+                    <form id="loginForm" class="login-form" novalidate>
+                        <div class="form-group">
+                            <label for="username">Usuário</label>
+                            <input 
+                                id="username" 
+                                name="username" 
+                                type="text" 
+                                placeholder="Digite seu usuário"
+                                autocomplete="username"
+                                aria-label="Usuário"
+                                required>
+                            <span id="usernameError" class="form-error" role="alert"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Senha</label>
+                            <input 
+                                id="password" 
+                                name="password" 
+                                type="password" 
+                                placeholder="Digite sua senha"
+                                autocomplete="current-password"
+                                aria-label="Senha"
+                                required>
+                            <span id="passwordError" class="form-error" role="alert"></span>
+                        </div>
+
+                        <div id="loginError" class="form-status form-status--error" role="alert" aria-live="polite"></div>
+
+                        <button type="submit" class="btn-login btn-login--primary" id="submitBtn">
+                            <span id="submitText">Entrar</span>
+                            <span class="material-symbols-outlined" id="loadingSpinner" aria-hidden="true" style="display: none;">progress_activity</span>
+                        </button>
+                    </form>
+
+                    <div class="login-footer">
+                        <p class="login-footer__hint">
+                            <strong>Acesso de demonstração:</strong><br>
+                            Usuário: <code>admin</code><br>
+                            Senha: <code>admin123</code>
+                        </p>
+                        <p class="login-footer__note">
+                            Por segurança, as credenciais padrão devem ser alteradas em produção.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- Seção informativa -->
+                <article class="login-info card">
+                    <p class="section-label">Sobre este acesso</p>
+                    <h2>Painel administrativo</h2>
+                    <ul class="login-info__features">
+                        <li><strong>Visualizar agendamentos:</strong> Veja todos os pedidos recentes.</li>
+                        <li><strong>Gerenciar integracoes:</strong> Acompanhe status das APIs.</li>
+                        <li><strong>Integração WhatsApp:</strong> Reenvie agendamentos rapidamente.</li>
+                        <li><strong>Sessão segura:</strong> Sua sessão expira após 2 horas de inatividade.</li>
+                    </ul>
+                </article>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="site-footer login-footer-main">
+            <div class="page-wrapper">
+                <p>&copy; 2026 Renovo Cabeleireiros. Todos os direitos reservados.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

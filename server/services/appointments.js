@@ -1,5 +1,5 @@
 const { config } = require("../config");
-const { saveAppointment, listAppointments } = require("../database");
+const { getAppointmentById, saveAppointment, listAppointments } = require("../database");
 const { validateAppointment } = require("../validation");
 const { notifySalonAboutAppointment } = require("./whatsapp");
 
@@ -46,7 +46,27 @@ async function createAppointment(payload) {
     };
 }
 
+async function notifyExistingAppointment(appointmentId) {
+    const appointment = getAppointmentById(appointmentId);
+
+    if (!appointment) {
+        return {
+            appointment: null,
+            message: "Agendamento nao encontrado.",
+            ok: false
+        };
+    }
+
+    return {
+        appointment,
+        message: "Tentativa de reenvio concluida.",
+        notification: await notifySalonAboutAppointment(appointment),
+        ok: true
+    };
+}
+
 module.exports = {
     createAppointment,
-    listAppointments
+    listAppointments,
+    notifyExistingAppointment
 };
