@@ -4,8 +4,12 @@
 data/*.db
 data/*.db-shm
 data/*.db-wal
+<<<<<<< HEAD
 **/__pycache__/
 **/*.pyc
 legacy/**/*.db
 legacy/**/*.db-shm
 legacy/**/*.db-wal
+=======
+data/.renovo-data.key
+>>>>>>> c6fdef57c6a1eef1dc77f3e22eb77f1e5f0862f7

@@ -19,15 +19,28 @@ const contentTypes = {
 };
 
 function resolveStaticPath(pathname) {
+<<<<<<< HEAD
     const normalizedPath = pathname === "/" ? "/index.html" : pathname;
     const decodedPath = decodeURIComponent(normalizedPath);
     const filePath = path.resolve(publicDirectory, `.${decodedPath}`);
 
     if (filePath !== publicDirectory && !filePath.startsWith(`${publicDirectory}${path.sep}`)) {
+=======
+    try {
+        const normalizedPath = pathname === "/" ? "/index.html" : pathname;
+        const decodedPath = decodeURIComponent(normalizedPath);
+        const filePath = path.normalize(path.join(rootDirectory, decodedPath));
+        const relativePath = path.relative(rootDirectory, filePath);
+
+        if (relativePath.startsWith("..") || path.isAbsolute(relativePath)) {
+            return "";
+        }
+
+        return filePath;
+    } catch {
+>>>>>>> c6fdef57c6a1eef1dc77f3e22eb77f1e5f0862f7
         return "";
     }
-
-    return filePath;
 }
 
 function serveStaticFile(filePath, request, response) {

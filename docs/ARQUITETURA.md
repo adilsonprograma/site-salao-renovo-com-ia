@@ -5,11 +5,14 @@ Este projeto foi reorganizado para ficar mais simples de manter por outras pesso
 ## Front-end
 
 - `index.html`: estrutura semantica da landing page, comentada por blocos.
+- `admin.html`: painel operacional em aba separada com login por senha.
 - `assets/scripts/app.js`: bootstrap unico da pagina.
+- `assets/scripts/admin.js`: bootstrap do painel operacional.
 - `assets/scripts/services/api-client.js`: concentrador das chamadas HTTP.
 - `assets/scripts/modules/contact-form.js`: validacao visual, ViaCEP e envio do formulario.
 - `assets/scripts/modules/chat-widget.js`: interacao da interface do chat e consumo da API do assistente.
 - `assets/scripts/modules/gallery-carousel.js`: comportamento isolado do carrossel.
+- `assets/scripts/modules/admin-panel.js`: autenticacao e listagem interna de agendamentos.
 
 ## Back-end
 
@@ -19,11 +22,13 @@ Este projeto foi reorganizado para ficar mais simples de manter por outras pesso
 - `server/static-server.js`: resolucao segura de arquivos publicos.
 - `server/config.js`: leitura de variaveis de ambiente e status de integracoes.
 - `server/database.js`: persistencia SQLite.
+- `server/security/encryption.js`: criptografia e descriptografia de campos sensiveis.
 - `server/validation.js`: saneamento e validacao do payload de agendamento.
 
 ## Servicos
 
 - `server/services/appointments.js`: cria agendamentos e dispara notificacao opcional.
+- `server/services/admin-auth.js`: autentica o painel operacional e gerencia sessao por cookie.
 - `server/services/assistant.js`: orquestra sessoes, Gemini, fallback local e criacao automatica de pre-agendamentos.
 - `server/services/fallback-assistant.js`: modo local do chat quando o Gemini nao estiver configurado.
 - `server/services/gemini.js`: integracao REST com o Gemini para resposta estruturada em JSON.
