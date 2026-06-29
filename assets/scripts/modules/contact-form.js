@@ -1,4 +1,4 @@
-import { saveAppointment } from "../services/api-client.js";
+// api-client sera importado dinamicamente apenas quando em localhost
 
 function isValidEmail(value) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -154,11 +154,6 @@ export function initContactForm() {
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        if (window.location.protocol === "file:") {
-            setStatus(formStatus, "Para salvar no banco, execute 'npm start' e abra o projeto em http://localhost:3000.", true);
-            return;
-        }
-
         const payload = buildPayload(fields);
         const validation = validatePayload(payload, fields);
 
@@ -168,22 +163,48 @@ export function initContactForm() {
             return;
         }
 
-        try {
-            submitButton.disabled = true;
-            setStatus(formStatus, "Salvando agendamento no banco...");
+        const isLocalServer = window.location.hostname === "localhost"
+            || window.location.hostname === "127.0.0.1";
 
-            const result = await saveAppointment(payload);
-            const notificationText = result.notification?.status === "sent"
-                ? " Notificacao enviada ao WhatsApp configurado."
-                : "";
+        if (isLocalServer) {
+            // Modo com servidor: salvar via API
+            try {
+                submitButton.disabled = true;
+                setStatus(formStatus, "Salvando agendamento no banco...");
+
+                const { saveAppointment } = await import("../services/api-client.js");
+                const result = await saveAppointment(payload);
+                const notificationText = result.notification?.status === "sent"
+                    ? " Notificacao enviada ao WhatsApp configurado."
+                    : "";
+
+                resetFormState(form, fields, cepStatus, formStatus);
+                setStatus(formStatus, `Agendamento #${result.appointment.id} salvo com sucesso.${notificationText}`);
+            } catch (error) {
+                console.error("Erro ao salvar agendamento:", error);
+                setStatus(formStatus, error.message || "Falha ao salvar o agendamento.", true);
+            } finally {
+                submitButton.disabled = false;
+            }
+        } else {
+            // Modo estatico (GitHub Pages): montar mensagem WhatsApp
+            const linhas = [
+                `*Novo agendamento via site*`,
+                `Nome: ${payload.nome}`,
+                `Email: ${payload.email}`,
+                `Telefone: ${payload.telefone}`,
+                `Servico: ${payload.servico}`,
+                payload.dataPreferencial ? `Data: ${payload.dataPreferencial}` : "",
+                payload.horarioPreferencial ? `Horario: ${payload.horarioPreferencial}` : "",
+                payload.assunto ? `Assunto: ${payload.assunto}` : "",
+                payload.mensagem ? `Obs: ${payload.mensagem}` : "",
+            ].filter(Boolean).join("\n");
+
+            const whatsappUrl = `https://wa.me/5588993294936?text=${encodeURIComponent(linhas)}`;
+            window.open(whatsappUrl, "_blank");
 
             resetFormState(form, fields, cepStatus, formStatus);
-            setStatus(formStatus, `Agendamento #${result.appointment.id} salvo com sucesso.${notificationText}`);
-        } catch (error) {
-            console.error("Erro ao salvar agendamento:", error);
-            setStatus(formStatus, error.message || "Falha ao salvar o agendamento.", true);
-        } finally {
-            submitButton.disabled = false;
+            setStatus(formStatus, "Redirecionando para o WhatsApp com seus dados... ✅");
         }
     });
 

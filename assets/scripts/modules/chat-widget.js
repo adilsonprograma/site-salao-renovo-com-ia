@@ -1,23 +1,73 @@
-import { fetchIntegrations, sendAssistantMessage } from "../services/api-client.js";
+/**
+ * chat-widget.js
+ * Chat ColorIA — funciona 100% offline no GitHub Pages.
+ * Fluxo de menu local: agendamento, consultoria de cor, tendencias de corte.
+ * Quando rodando com o servidor Node (localhost), tenta usar a API Gemini.
+ */
 
-const DEFAULT_WELCOME = [
-    "Ola! Sou a ColorIA Agenda.",
-    "Posso te ajudar com agendamento, cor e tendencias de corte.",
-    "Digite sua pergunta para comecarmos."
+const MENU_PRINCIPAL = [
+    "Ola! Sou a ColorIA Agenda do Renovo Cabeleireiros. 💇‍♀️",
+    "",
+    "Como posso ajudar?",
+    "1️⃣ — Agendar um horario",
+    "2️⃣ — Consultoria de cor",
+    "3️⃣ — Tendencias de corte",
+    "",
+    "Digite o numero da opcao desejada."
 ].join("\n");
 
-function getSessionId() {
-    const storageKey = "coloria-session-id";
-    const existingId = window.sessionStorage.getItem(storageKey);
+const RESPOSTAS = {
+    "1": [
+        "📅 Para agendar, preciso de algumas informacoes:",
+        "",
+        "• Seu nome completo",
+        "• Servico desejado (corte, coloracao, tratamento...)",
+        "• Data e horario de preferencia",
+        "",
+        "Voce tambem pode preencher o formulario de contato na secao abaixo,",
+        "ou ligar diretamente: (88) 99329-4936.",
+        "",
+        "Digite 0 para voltar ao menu."
+    ].join("\n"),
 
-    if (existingId) {
-        return existingId;
-    }
+    "2": [
+        "🎨 Consultoria de cor — aqui vao algumas orientacoes:",
+        "",
+        "• Morena iluminada: ideal para quem quer clarear com suavidade",
+        "• Loiro dourado: funciona bem com subtons quentes",
+        "• Cobre/ruivo: tendencia forte, exige manutencao com matizacao",
+        "• Neutralizacao: corrige tons amarelados ou alaranjados",
+        "",
+        "Dica: traga fotos de referencia na consulta presencial!",
+        "",
+        "Para agendar uma avaliacao, digite 1.",
+        "Digite 0 para voltar ao menu."
+    ].join("\n"),
 
-    const newId = window.crypto?.randomUUID?.() || `coloria-${Date.now()}`;
-    window.sessionStorage.setItem(storageKey, newId);
+    "3": [
+        "✂️ Tendencias de corte em alta:",
+        "",
+        "👩 Feminino:",
+        "  • Bob curto assimetrico",
+        "  • Longo com camadas suaves (butterfly cut)",
+        "  • Franja cortina",
+        "",
+        "👨 Masculino:",
+        "  • Degrade medio com textura no topo",
+        "  • Corte social moderno",
+        "  • Mullet contemporaneo",
+        "",
+        "Quer agendar um corte? Digite 1.",
+        "Digite 0 para voltar ao menu."
+    ].join("\n"),
 
-    return newId;
+    "0": null // volta ao menu principal
+};
+
+// Detecta se ha servidor backend rodando
+function isLocalServer() {
+    const host = window.location.hostname;
+    return host === "localhost" || host === "127.0.0.1";
 }
 
 function addMessage(container, text, sender) {
@@ -37,6 +87,33 @@ function setChatOpen(chatWidget, triggers, open) {
     });
 }
 
+function handleLocalMessage(chatWindow, message) {
+    const key = message.trim();
+
+    if (key === "0") {
+        addMessage(chatWindow, MENU_PRINCIPAL, "bot");
+        return;
+    }
+
+    const resposta = RESPOSTAS[key];
+
+    if (resposta) {
+        addMessage(chatWindow, resposta, "bot");
+        return;
+    }
+
+    // Resposta generica para texto livre
+    addMessage(chatWindow, [
+        "Entendi! Para te atender melhor, escolha uma opcao:",
+        "",
+        "1️⃣ Agendar horario",
+        "2️⃣ Consultoria de cor",
+        "3️⃣ Tendencias de corte",
+        "",
+        "Ou entre em contato pelo WhatsApp: (88) 99329-4936"
+    ].join("\n"), "bot");
+}
+
 export function initChatWidget() {
     const chatWidget = document.getElementById("chatWidget");
     const chatWindow = document.getElementById("chatWindow");
@@ -47,19 +124,25 @@ export function initChatWidget() {
     const navChatToggle = document.getElementById("navChatToggle");
     const heroChatToggle = document.getElementById("heroChatToggle");
     const closeChat = document.getElementById("closeChat");
-    const formStatus = document.getElementById("formStatus");
     const triggers = [fabChat, navChatToggle, heroChatToggle];
 
     if (!chatWidget || !chatWindow || !userInput || !sendBtn) {
         return;
     }
 
-    const sessionId = getSessionId();
     let isSending = false;
     let lastTrigger = null;
+    const useApi = isLocalServer();
 
+    // Mensagem inicial
     chatWindow.innerHTML = "";
-    addMessage(chatWindow, DEFAULT_WELCOME, "bot");
+    addMessage(chatWindow, MENU_PRINCIPAL, "bot");
+
+    if (chatSubtitle) {
+        chatSubtitle.textContent = useApi
+            ? "Agendamento com API"
+            : "Agendamento e consultoria";
+    }
 
     const handleToggle = (event) => {
         lastTrigger = event?.currentTarget || lastTrigger;
@@ -83,60 +166,37 @@ export function initChatWidget() {
             return;
         }
 
-        if (window.location.protocol === "file:") {
-            addMessage(chatWindow, "Execute 'npm start' e abra o projeto em http://localhost:3000 para usar o chat com API.", "bot");
-            return;
-        }
-
         addMessage(chatWindow, message, "user");
         userInput.value = "";
-        userInput.disabled = true;
-        sendBtn.disabled = true;
         isSending = true;
 
-        try {
-            const result = await sendAssistantMessage({
-                message,
-                sessionId
-            });
+        if (useApi) {
+            // Modo com servidor: tenta chamar API
+            try {
+                const { sendAssistantMessage } = await import("../services/api-client.js");
+                const sessionId = window.sessionStorage.getItem("coloria-session-id")
+                    || (() => {
+                        const id = window.crypto?.randomUUID?.() || `coloria-${Date.now()}`;
+                        window.sessionStorage.setItem("coloria-session-id", id);
+                        return id;
+                    })();
 
-            addMessage(chatWindow, result.reply, "bot");
-
-            if (result.appointment && formStatus) {
-                formStatus.textContent = `O chat registrou o pre-agendamento #${result.appointment.id}. Se quiser, o formulario continua disponivel para um novo pedido.`;
-                formStatus.classList.remove("error");
+                const result = await sendAssistantMessage({ message, sessionId });
+                addMessage(chatWindow, result.reply, "bot");
+            } catch (error) {
+                console.warn("API indisponivel, usando modo local:", error.message);
+                handleLocalMessage(chatWindow, message);
             }
-        } catch (error) {
-            console.error("Erro ao enviar mensagem para a ColorIA:", error);
-            addMessage(chatWindow, error.message || "Nao consegui responder agora. Tente novamente em instantes.", "bot");
-        } finally {
-            userInput.disabled = false;
-            sendBtn.disabled = false;
-            isSending = false;
-            userInput.focus();
+        } else {
+            // Modo estatico: respostas locais
+            handleLocalMessage(chatWindow, message);
         }
+
+        isSending = false;
+        userInput.focus();
     };
 
-    if (window.location.protocol === "file:") {
-        if (chatSubtitle) {
-            chatSubtitle.textContent = "Abra em localhost para ativar as APIs";
-        }
-    } else {
-        fetchIntegrations()
-            .then((integrations) => {
-                if (!chatSubtitle) {
-                    return;
-                }
-
-                chatSubtitle.textContent = integrations.gemini.configured
-                    ? "Agendamento com Gemini"
-                    : "Agendamento em modo local";
-            })
-            .catch((error) => {
-                console.error("Nao foi possivel consultar as integracoes:", error);
-            });
-    }
-
+    // Event listeners
     triggers.forEach((trigger) => {
         trigger?.addEventListener("click", handleToggle);
     });
