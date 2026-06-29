@@ -1,20 +1,21 @@
 :root {
-    --brand: #6f7d19;
-    --brand-deep: #485410;
-    --brand-soft: #95a63f;
-    --accent: #f2c1d6;
+    /* Dark theme palette */
+    --brand: #c0d36e; /* lighter accent for visibility */
+    --brand-deep: #9ab04c;
+    --brand-soft: #d1e298;
+    --accent: #f2c1d6; /* keep for highlights */
     --accent-soft: #fde8ef;
-    --ink: #1f2417;
-    --muted: #5f6458;
-    --line: rgba(48, 54, 34, 0.12);
-    --surface: rgba(255, 255, 255, 0.7);
-    --surface-strong: rgba(255, 255, 255, 0.9);
-    --card-bg: rgba(255, 255, 255, 0.82);
-    --card-shadow: 0 28px 70px rgba(32, 31, 24, 0.12);
+    --ink: #e0e5e0; /* light text */
+    --muted: #c3c9bf;
+    --line: rgba(200, 210, 190, 0.12);
+    --surface: rgba(24, 27, 22, 0.85);
+    --surface-strong: rgba(30, 34, 28, 0.95);
+    --card-bg: rgba(40, 44, 38, 0.9);
+    --card-shadow: 0 28px 70px rgba(0, 0, 0, 0.4);
     --chat-bg: #181b16;
     --chat-surface: #20241c;
     --chat-border: #31372b;
-    --danger: #b00020;
+    --danger: #ff6b6b;
     --radius-xl: 34px;
     --radius-lg: 26px;
     --radius-md: 18px;
@@ -37,12 +38,12 @@ body {
     margin: 0;
     min-height: 100vh;
     overflow-x: hidden;
-    font-family: "Manrope", system-ui, sans-serif;
+    font-family: "Inter", system-ui, sans-serif;
     color: var(--ink);
     background:
-        radial-gradient(circle at top left, rgba(255, 232, 240, 0.88), transparent 28%),
-        radial-gradient(circle at top right, rgba(220, 235, 192, 0.64), transparent 24%),
-        linear-gradient(140deg, #fdfaf6 0%, #f4f0e7 45%, #f8edf2 100%);
+        radial-gradient(circle at top left, rgba(30, 34, 28, 0.5), transparent 28%),
+        radial-gradient(circle at top right, rgba(45, 55, 40, 0.5), transparent 24%),
+        linear-gradient(140deg, #212621 0%, #2b3024 45%, #2e3a2b 100%);
 }
 
 body::before,
@@ -167,6 +168,7 @@ textarea {
     color: #fff;
     text-decoration: none;
     transform: translateY(-1px);
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
 .hero,
@@ -324,7 +326,8 @@ li {
 .showcase-note:hover,
 .contact-panel:hover {
     transform: translateY(-4px);
-    box-shadow: 0 20px 36px rgba(31, 36, 23, 0.1);
+    box-shadow: 0 20px 36px rgba(0, 0, 0, 0.2);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 
 .metric-card span {
@@ -476,8 +479,9 @@ li {
     gap: 0;
     border-radius: 30px;
     overflow: hidden;
-    background: linear-gradient(145deg, rgba(16, 19, 13, 0.95), rgba(51, 57, 43, 0.88));
+    background: linear-gradient(145deg, rgba(30, 34, 28, 0.95), rgba(60, 68, 55, 0.88));
     color: #fff;
+    transition: background 0.3s ease;
 }
 
 .carousel__media {
