@@ -1,15 +1,7 @@
 const { config } = require("../config");
-<<<<<<< HEAD
-const { getAppointmentById, saveAppointment, listAppointments } = require("../database");
-=======
-const { saveAppointment, listAppointments: listAppointmentsFromDatabase } = require("../database");
->>>>>>> c6fdef57c6a1eef1dc77f3e22eb77f1e5f0862f7
+const { getAppointmentById, saveAppointment, listAppointments: listAppointmentsFromDatabase } = require("../database");
 const { validateAppointment } = require("../validation");
 const { notifySalonAboutAppointment } = require("./whatsapp");
-
-function buildDefaultSubject(service) {
-    return `Solicitacao de agendamento - ${service || config.appName}`;
-}
 
 function buildDefaultMessage(appointment) {
     return [
@@ -35,7 +27,6 @@ async function createAppointment(payload) {
 
     const appointmentInput = {
         ...validation.appointment,
-        assunto: validation.appointment.assunto || buildDefaultSubject(validation.appointment.servico),
         mensagem: validation.appointment.mensagem || buildDefaultMessage(validation.appointment)
     };
 
@@ -50,7 +41,6 @@ async function createAppointment(payload) {
     };
 }
 
-<<<<<<< HEAD
 async function notifyExistingAppointment(appointmentId) {
     const appointment = getAppointmentById(appointmentId);
 
@@ -70,11 +60,6 @@ async function notifyExistingAppointment(appointmentId) {
     };
 }
 
-module.exports = {
-    createAppointment,
-    listAppointments,
-    notifyExistingAppointment
-=======
 function maskName(name) {
     const normalized = String(name || "").trim();
 
@@ -91,18 +76,6 @@ function maskName(name) {
     return `${parts[0]} ${parts[1].slice(0, 1)}.`;
 }
 
-function maskEmail(email) {
-    const normalized = String(email || "").trim();
-
-    if (!normalized || !normalized.includes("@")) {
-        return "";
-    }
-
-    const [localPart, domain] = normalized.split("@");
-    const visibleStart = localPart.slice(0, 2);
-    return `${visibleStart}***@${domain}`;
-}
-
 function maskPhone(phone) {
     const digits = String(phone || "").replace(/\D/g, "");
 
@@ -116,11 +89,6 @@ function maskPhone(phone) {
 function redactAppointment(appointment) {
     return {
         ...appointment,
-        bairro: "[protegido]",
-        cep: "[protegido]",
-        email: maskEmail(appointment.email),
-        localidade: "[protegido]",
-        logradouro: "[protegido]",
         mensagem: "[protegido]",
         nome: maskName(appointment.nome),
         telefone: maskPhone(appointment.telefone)
@@ -139,6 +107,7 @@ function getAppointments({ includeSensitive = false, limit = 25 } = {}) {
 
 module.exports = {
     createAppointment,
-    getAppointments
->>>>>>> c6fdef57c6a1eef1dc77f3e22eb77f1e5f0862f7
+    getAppointments,
+    listAppointments: listAppointmentsFromDatabase,
+    notifyExistingAppointment
 };

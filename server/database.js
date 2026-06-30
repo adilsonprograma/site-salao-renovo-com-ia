@@ -21,16 +21,10 @@ database.exec(`
     CREATE TABLE IF NOT EXISTS appointments (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         client_name TEXT NOT NULL,
-        email TEXT NOT NULL,
         phone TEXT NOT NULL,
         service TEXT NOT NULL,
         preferred_date TEXT,
         preferred_time TEXT,
-        cep TEXT,
-        street TEXT,
-        neighborhood TEXT,
-        city_state TEXT,
-        subject TEXT NOT NULL,
         message TEXT NOT NULL,
         source TEXT NOT NULL DEFAULT 'site_form',
         status TEXT NOT NULL DEFAULT 'novo',
@@ -44,37 +38,25 @@ database.exec(`
 const insertAppointmentStatement = database.prepare(`
     INSERT INTO appointments (
         client_name,
-        email,
         phone,
         service,
         preferred_date,
         preferred_time,
-        cep,
-        street,
-        neighborhood,
-        city_state,
-        subject,
         message,
         source,
         status,
         created_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 `);
 
 const listAppointmentsStatement = database.prepare(`
     SELECT
         id,
         client_name AS nome,
-        email,
         phone AS telefone,
         service AS servico,
         preferred_date AS dataPreferencial,
         preferred_time AS horarioPreferencial,
-        cep,
-        street AS logradouro,
-        neighborhood AS bairro,
-        city_state AS localidade,
-        subject AS assunto,
         message AS mensagem,
         source AS origemAgendamento,
         status,
@@ -88,16 +70,10 @@ const getAppointmentByIdStatement = database.prepare(`
     SELECT
         id,
         client_name AS nome,
-        email,
         phone AS telefone,
         service AS servico,
         preferred_date AS dataPreferencial,
         preferred_time AS horarioPreferencial,
-        cep,
-        street AS logradouro,
-        neighborhood AS bairro,
-        city_state AS localidade,
-        subject AS assunto,
         message AS mensagem,
         source AS origemAgendamento,
         status,
@@ -109,15 +85,8 @@ const getAppointmentByIdStatement = database.prepare(`
 function saveAppointment(appointment) {
     const createdAt = new Date().toISOString();
     const encryptedAppointment = {
-        ...appointment,
-        assunto: encryptText(appointment.assunto),
-        bairro: encryptText(appointment.bairro),
-        cep: encryptText(appointment.cep),
         dataPreferencial: encryptText(appointment.dataPreferencial),
-        email: encryptText(appointment.email),
         horarioPreferencial: encryptText(appointment.horarioPreferencial),
-        localidade: encryptText(appointment.localidade),
-        logradouro: encryptText(appointment.logradouro),
         mensagem: encryptText(appointment.mensagem),
         nome: encryptText(appointment.nome),
         servico: encryptText(appointment.servico),
@@ -126,18 +95,12 @@ function saveAppointment(appointment) {
 
     const result = insertAppointmentStatement.run(
         encryptedAppointment.nome,
-        encryptedAppointment.email,
         encryptedAppointment.telefone,
         encryptedAppointment.servico,
         encryptedAppointment.dataPreferencial,
         encryptedAppointment.horarioPreferencial,
-        encryptedAppointment.cep,
-        encryptedAppointment.logradouro,
-        encryptedAppointment.bairro,
-        encryptedAppointment.localidade,
-        encryptedAppointment.assunto,
         encryptedAppointment.mensagem,
-        encryptedAppointment.origemAgendamento,
+        appointment.origemAgendamento,
         "novo",
         createdAt
     );
@@ -153,14 +116,8 @@ function saveAppointment(appointment) {
 function decodeAppointmentRow(row) {
     return {
         ...row,
-        assunto: decryptText(row.assunto),
-        bairro: decryptText(row.bairro),
-        cep: decryptText(row.cep),
         dataPreferencial: decryptText(row.dataPreferencial),
-        email: decryptText(row.email),
         horarioPreferencial: decryptText(row.horarioPreferencial),
-        localidade: decryptText(row.localidade),
-        logradouro: decryptText(row.logradouro),
         mensagem: decryptText(row.mensagem),
         nome: decryptText(row.nome),
         servico: decryptText(row.servico),
@@ -194,7 +151,7 @@ function getAppointmentById(id) {
     }
 
     return {
-        ...row,
+        ...decodeAppointmentRow(row),
         id: Number(row.id)
     };
 }

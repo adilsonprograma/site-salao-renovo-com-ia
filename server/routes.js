@@ -11,19 +11,7 @@ const { getIntegrationStatus } = require("./config");
 const { readJsonBody, sendJson, sendNoContent, sendText } = require("./http");
 const { areSensitiveFieldsProtected } = require("./security/encryption");
 const { resolveStaticPath, serveStaticFile } = require("./static-server");
-<<<<<<< HEAD
 const { createAppointment, listAppointments, notifyExistingAppointment } = require("./services/appointments");
-=======
-const { createAppointment, getAppointments } = require("./services/appointments");
-const {
-    buildAuthCookie,
-    buildClearCookie,
-    createSession,
-    invalidateSession,
-    isAdminAuthenticated,
-    isValidPassword
-} = require("./services/admin-auth");
->>>>>>> c6fdef57c6a1eef1dc77f3e22eb77f1e5f0862f7
 const { processWhatsAppWebhookPayload, runAssistantTurn } = require("./services/assistant");
 const { verifyWhatsAppWebhook } = require("./services/whatsapp");
 
@@ -91,7 +79,6 @@ async function handleAssistantChat(request, response) {
 
 async function handleAdminLogin(request, response) {
     const payload = await readJsonBody(request);
-<<<<<<< HEAD
     const username = String(payload.username || "").trim();
     const password = String(payload.password || "").trim();
 
@@ -107,47 +94,18 @@ async function handleAdminLogin(request, response) {
     if (!result.success) {
         sendJson(response, 401, {
             message: result.message
-=======
-    const password = String(payload.password || "");
-
-    if (!isValidPassword(password)) {
-        sendJson(response, 401, {
-            message: "Senha invalida para o painel operacional."
->>>>>>> c6fdef57c6a1eef1dc77f3e22eb77f1e5f0862f7
         });
         return;
     }
 
-<<<<<<< HEAD
     sendJson(response, 200, {
         message: result.message
     }, {
         "Set-Cookie": buildSessionCookie(result.session.sessionId)
-=======
-    const token = createSession();
-
-    sendJson(
-        response,
-        200,
-        {
-            authenticated: true,
-            message: "Acesso liberado ao painel operacional."
-        },
-        {
-            "Set-Cookie": buildAuthCookie(token)
-        }
-    );
-}
-
-function handleAdminSession(request, response) {
-    sendJson(response, 200, {
-        authenticated: isAdminAuthenticated(request)
->>>>>>> c6fdef57c6a1eef1dc77f3e22eb77f1e5f0862f7
     });
 }
 
 function handleAdminLogout(request, response) {
-<<<<<<< HEAD
     logoutAdmin(request);
 
     sendJson(response, 200, {
@@ -221,21 +179,6 @@ async function handleAdminAppointmentNotify(request, response, appointmentId) {
         message: result.message,
         notification: result.notification
     });
-=======
-    invalidateSession(request);
-
-    sendJson(
-        response,
-        200,
-        {
-            authenticated: false,
-            message: "Sessao finalizada com sucesso."
-        },
-        {
-            "Set-Cookie": buildClearCookie()
-        }
-    );
->>>>>>> c6fdef57c6a1eef1dc77f3e22eb77f1e5f0862f7
 }
 
 async function routeRequest(request, response) {
@@ -273,24 +216,6 @@ async function routeRequest(request, response) {
         return;
     }
 
-    if (requestUrl.pathname === "/api/appointments" && request.method === "GET") {
-        const limit = requestUrl.searchParams.get("limit");
-        const includeSensitive = isTruthy(requestUrl.searchParams.get("sensitive"));
-        const canReadSensitiveData = !includeSensitive || isAdminAuthenticated(request);
-
-        if (!canReadSensitiveData) {
-            sendJson(response, 401, {
-                message: "Sessao admin obrigatoria para acessar dados sensiveis."
-            });
-            return;
-        }
-
-        sendJson(response, 200, {
-            appointments: getAppointments({ includeSensitive, limit })
-        });
-        return;
-    }
-
     if (requestUrl.pathname === "/api/appointments" && request.method === "POST") {
         await handleAppointmentsCreate(request, response);
         return;
@@ -311,18 +236,12 @@ async function routeRequest(request, response) {
         return;
     }
 
-<<<<<<< HEAD
     if (requestUrl.pathname === "/api/admin/status" && request.method === "GET") {
         handleAdminStatus(request, response);
-=======
-    if (requestUrl.pathname === "/api/admin/session" && request.method === "GET") {
-        handleAdminSession(request, response);
->>>>>>> c6fdef57c6a1eef1dc77f3e22eb77f1e5f0862f7
         return;
     }
 
     if (requestUrl.pathname === "/api/admin/appointments" && request.method === "GET") {
-<<<<<<< HEAD
         handleAdminAppointmentsList(requestUrl, request, response);
         return;
     }
@@ -336,21 +255,6 @@ async function routeRequest(request, response) {
         && request.method === "POST"
     ) {
         await handleAdminAppointmentNotify(request, response, pathParts[3]);
-=======
-        if (!isAdminAuthenticated(request)) {
-            sendJson(response, 401, {
-                message: "Entre com a senha do painel para visualizar os agendamentos."
-            });
-            return;
-        }
-
-        sendJson(response, 200, {
-            appointments: getAppointments({
-                includeSensitive: true,
-                limit: requestUrl.searchParams.get("limit")
-            })
-        });
->>>>>>> c6fdef57c6a1eef1dc77f3e22eb77f1e5f0862f7
         return;
     }
 
