@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Landing page do Renovo Cabeleireiros com galeria interativa, formulario de contato e assistente virtual de agendamento e colorimetria.">
+    <meta name="description"
+        content="Landing page do Renovo Cabeleireiros com galeria interativa, formulario de contato e assistente virtual de agendamento e colorimetria.">
     <title>Renovo Cabeleireiros &amp; ColorIA</title>
     <meta name="theme-color" content="#0f1210">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Outlined" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Outlined"
+        rel="stylesheet">
     <link rel="stylesheet" href="assets/styles/main.css">
     <script type="module" src="assets/scripts/app.js"></script>
 </head>
+
 <body>
     <!-- Estrutura principal da pagina -->
     <div class="site-shell">
@@ -26,7 +31,8 @@
                     <a href="#sobre">Sobre</a>
                     <a href="#horarios">Horarios</a>
                     <a href="#contato">Contato</a>
-                    <button type="button" id="navChatToggle" aria-controls="chatWidget" aria-expanded="false">Agenda &amp; ColorIA</button>
+                    <button type="button" id="navChatToggle" aria-controls="chatWidget" aria-expanded="false">Agenda
+                        &amp; ColorIA</button>
                 </nav>
             </div>
         </header>
@@ -46,7 +52,8 @@
 
                     <div class="hero__actions">
                         <a class="btn-hero btn-hero--primary" href="#contato">Reservar horario</a>
-                        <button type="button" class="btn-hero btn-hero--ghost" id="heroChatToggle">Abrir ColorIA</button>
+                        <button type="button" class="btn-hero btn-hero--ghost" id="heroChatToggle">Abrir
+                            ColorIA</button>
                     </div>
 
                     <div class="hero__chips" aria-label="Destaques do salao">
@@ -78,16 +85,19 @@
 
                 <div class="hero__visual">
                     <figure class="hero__media">
-                        <img src="assets/images/renovo-salao.png" alt="Interior do salao Renovo Cabeleireiros" loading="lazy">
+                        <img src="assets/images/renovo-salao.png" alt="Interior do salao Renovo Cabeleireiros"
+                            loading="lazy">
                     </figure>
+                </div>
 
-                    <article class="floating-card floating-card--top">
+                <div class="hero__cards-below">
+                    <article class="floating-card floating-card--below">
                         <p class="floating-card__label">Destaque da semana</p>
                         <strong>Morena iluminada com acabamento glossy</strong>
                         <p>Visual sofisticado com transicao suave e brilho intenso.</p>
                     </article>
-                    
-                    <article class="floating-card floating-card--bottom">
+
+                    <article class="floating-card floating-card--below">
                         <p class="floating-card__label">ColorIA</p>
                         <strong>Agende, escolha a cor e explore cortes em alta.</strong>
                         <p>Um suporte rapido para iniciar a conversa antes do atendimento.</p>
@@ -100,7 +110,7 @@
                 <div class="gallery-showcase__intro">
                     <p class="section-label">Galeria sensorial</p>
                     <h2>Fotos, atmosfera e um carrossel para apresentar o salao com mais presenca.</h2>
-                    
+
 
                     <div class="showcase-notes">
                         <article class="showcase-note">
@@ -126,37 +136,43 @@
                         <div class="carousel__track" data-carousel-track>
                             <article class="carousel__slide is-active" data-carousel-slide>
                                 <figure class="carousel__media">
-                                    <img class="carousel__image carousel__image--wide" src="assets/images/20260328_102923.jpg" alt="Ambiente principal do Renovo Cabeleireiros"  loading="lazy" width="300">
+                                    <img class="carousel__image carousel__image--wide"
+                                        src="assets/images/20260328_102923.jpg"
+                                        alt="Ambiente principal do Renovo Cabeleireiros" loading="lazy" width="300">
                                 </figure>
 
                                 <div class="carousel__content">
                                     <p class="carousel__eyebrow">Ambiente</p>
                                     <h3>Recepcao acolhedora com atmosfera clara e elegante.</h3>
-                                    
+
                                 </div>
                             </article>
 
                             <article class="carousel__slide" data-carousel-slide>
                                 <figure class="carousel__media">
-                                    <img class="carousel__image carousel__image--left" src="assets/images/20260328_102936.jpg" alt="Detalhes internos do salao Renovo" loading="lazy" width="300">
+                                    <img class="carousel__image carousel__image--left"
+                                        src="assets/images/20260328_102936.jpg" alt="Detalhes internos do salao Renovo"
+                                        loading="lazy" width="300">
                                 </figure>
 
                                 <div class="carousel__content">
                                     <p class="carousel__eyebrow">Manicure e pedicure</p>
                                     <h3>Espaco dedicado ao cuidado das unhas e pes.</h3>
-                                   
+
                                 </div>
                             </article>
 
                             <article class="carousel__slide" data-carousel-slide>
                                 <figure class="carousel__media">
-                                    <img class="carousel__image carousel__image--right" src="assets/images/20260328_102912.jpg" alt="Espaco de atendimento e finalizacao do salao" loading="lazy" width="300">
+                                    <img class="carousel__image carousel__image--right"
+                                        src="assets/images/20260328_102912.jpg"
+                                        alt="Espaco de atendimento e finalizacao do salao" loading="lazy" width="300">
                                 </figure>
 
                                 <div class="carousel__content">
                                     <p class="carousel__eyebrow">Finalizacao</p>
                                     <h3>Apresente cortes, acabamento e pequenos rituais de autocuidado.</h3>
-                                    
+
                                 </div>
                             </article>
                         </div>
@@ -164,18 +180,23 @@
 
                     <div class="carousel__footer">
                         <div class="carousel__controls">
-                            <button type="button" class="carousel__button" data-carousel-prev aria-label="Slide anterior">
+                            <button type="button" class="carousel__button" data-carousel-prev
+                                aria-label="Slide anterior">
                                 <span class="material-symbols-outlined" aria-hidden="true">west</span>
                             </button>
-                            <button type="button" class="carousel__button" data-carousel-next aria-label="Proximo slide">
+                            <button type="button" class="carousel__button" data-carousel-next
+                                aria-label="Proximo slide">
                                 <span class="material-symbols-outlined" aria-hidden="true">east</span>
                             </button>
                         </div>
 
                         <div class="carousel__dots" aria-label="Indicadores do carrossel">
-                            <button type="button" class="carousel__dot is-active" data-carousel-dot="0" aria-label="Ir para o slide 1" aria-pressed="true"></button>
-                            <button type="button" class="carousel__dot" data-carousel-dot="1" aria-label="Ir para o slide 2" aria-pressed="false"></button>
-                            <button type="button" class="carousel__dot" data-carousel-dot="2" aria-label="Ir para o slide 3" aria-pressed="false"></button>
+                            <button type="button" class="carousel__dot is-active" data-carousel-dot="0"
+                                aria-label="Ir para o slide 1" aria-pressed="true"></button>
+                            <button type="button" class="carousel__dot" data-carousel-dot="1"
+                                aria-label="Ir para o slide 2" aria-pressed="false"></button>
+                            <button type="button" class="carousel__dot" data-carousel-dot="2"
+                                aria-label="Ir para o slide 3" aria-pressed="false"></button>
                         </div>
                     </div>
                 </div>
@@ -190,11 +211,7 @@
                         O Renovo Cabeleireiros nasceu com a proposta de unir acolhimento, tecnica e acompanhamento
                         personalizado em cada etapa do atendimento.
                     </p>
-                    <br>
-                    <p>
-                        A proposta do layout agora acompanha isso: uma identidade mais sofisticada, com mais ritmo,
-                        hierarquia visual e espacos que convidam a navegar.
-                    </p>
+
                 </div>
 
                 <div class="service-grid">
@@ -213,7 +230,8 @@
                     <article class="service-card">
                         <span class="material-symbols-outlined" aria-hidden="true">self_improvement</span>
                         <h3>Tratamentos e ritual</h3>
-                        <p>Reconstrucao, brilho, hidratacao e uma experiencia visual mais premium na jornada inteira.</p>
+                        <p>Reconstrucao, brilho, hidratacao e uma experiencia visual mais premium na jornada inteira.
+                        </p>
                     </article>
                 </div>
             </section>
@@ -260,24 +278,26 @@
                     <div>
                         <p class="section-label">Fale com a equipe</p>
                         <h2>Contato</h2>
-                        <p>Entre em contato direto com o salao ou preencha o formulario para solicitar seu horario.</p>
+                        <p>Entre em contato direto com nossos profissionais.</p>
                     </div>
 
                     <div class="contact-pills" aria-label="Informacoes de contato">
-                        <p><strong>WhatsApp:</strong> (88) 99329-4936</p>
+                        <p><strong>WhatsApp:</strong> (88) 99329-4936 (Adilson)</p>
+                        <p><strong>WhatsApp:</strong> (88) 99329-2367 (Adriana)</p>
+                        <p><strong>Instagram:</strong> @renovocabeleireiros</p>
                         <p><strong>Endereco:</strong> Rua Matosso, 216 - Russas/CE</p>
                     </div>
                 </div>
 
                 <div class="contact__layout">
                     <article class="contact-panel contact-panel--info">
-                        <p class="contact-panel__eyebrow">Experiencia guiada</p>
-                        <h3>Escolha a melhor porta de entrada</h3>
+                        <p class="contact-panel__eyebrow">Para uma melhor experiência</p>
+                        <h3>Preencha nosso formulario corretamente</h3>
                         <ul class="contact-panel__list">
-                            <li>Use a ColorIA para montar um pre-agendamento.</li>
-                            <li>Fluxo pronto para Gemini no site e WhatsApp Cloud API.</li>
-                            <li>Peca ajuda com cor, corte ou neutralizacao.</li>
-                            <li>Envie o formulario ja com as informacoes organizadas.</li>
+                            <li>Para conhecermos melhor suas necessidades.</li>
+                            <li>Para indicar o melhor profissional para você.</li>
+                            <li>Para oferecer o melhor atendimento.</li>
+                            <li>Evite informações incorretas ou incompletas.</li>
                         </ul>
                     </article>
 
@@ -289,22 +309,24 @@
 
                             <!-- Campos estruturados para manter o payload da API previsivel -->
                             <div class="contact-form__grid">
-                                <input id="nome" name="nome" type="text" placeholder="Nome completo" autocomplete="name" aria-label="Nome completo" required>
-                                <input id="email" name="email" type="email" placeholder="E-mail" autocomplete="email" aria-label="E-mail" required>
-                                <input id="telefone" name="telefone" type="tel" placeholder="WhatsApp / Telefone" autocomplete="tel" aria-label="WhatsApp ou telefone" required>
-                                <input id="servico" name="servico" type="text" placeholder="Servico desejado" list="serviceOptions" aria-label="Servico desejado" required>
-                                <input id="dataPreferencial" name="dataPreferencial" type="text" placeholder="Data preferencial" aria-label="Data preferencial">
-                                <input id="horarioPreferencial" name="horarioPreferencial" type="text" placeholder="Horario ou periodo preferido" aria-label="Horario ou periodo preferido">
-                                <input id="cep" name="cep" type="text" placeholder="CEP (somente numeros)" maxlength="9" inputmode="numeric" autocomplete="postal-code" aria-label="CEP" aria-describedby="cepStatus">
-                                <input id="logradouro" name="logradouro" type="text" placeholder="Rua" readonly aria-label="Rua">
-                                <input id="bairro" name="bairro" type="text" placeholder="Bairro" readonly aria-label="Bairro">
-                                <input id="localidade" name="localidade" type="text" placeholder="Cidade / UF" readonly aria-label="Cidade e UF">
-                                <input id="assunto" name="assunto" type="text" placeholder="Assunto" aria-label="Assunto">
+                                <input id="nome" name="nome" type="text" placeholder="Nome completo" autocomplete="name"
+                                    aria-label="Nome completo" required>
+                                <input id="telefone" name="telefone" type="tel" placeholder="WhatsApp / Telefone"
+                                    autocomplete="tel" aria-label="WhatsApp ou telefone" required>
+                                <input id="servico" name="servico" type="text" placeholder="Servico desejado"
+                                    list="serviceOptions" aria-label="Servico desejado" required>
+                                <input id="dataPreferencial" name="dataPreferencial" type="text"
+                                    placeholder="Data preferencial" aria-label="Data preferencial">
+                                <input id="horarioPreferencial" name="horarioPreferencial" type="text"
+                                    placeholder="Horario ou periodo preferido"
+                                    aria-label="Horario ou periodo preferido">
                             </div>
 
                             <p id="cepStatus" class="form-help" role="status" aria-live="polite"></p>
 
-                            <textarea id="mensagem" name="mensagem" rows="4" placeholder="Observacoes adicionais, referencias ou detalhes do atendimento" aria-label="Observacoes adicionais"></textarea>
+                            <textarea id="mensagem" name="mensagem" rows="4"
+                                placeholder="Observacoes adicionais, referencias ou detalhes do atendimento"
+                                aria-label="Observacoes adicionais"></textarea>
 
                             <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
 
@@ -334,7 +356,8 @@
     </div>
 
     <!-- Botao flutuante que abre o chat em qualquer ponto da pagina -->
-    <button class="fab-chat" id="fabChat" type="button" aria-controls="chatWidget" aria-expanded="false" aria-label="Abrir chat ColorIA">
+    <button class="fab-chat" id="fabChat" type="button" aria-controls="chatWidget" aria-expanded="false"
+        aria-label="Abrir chat ColorIA">
         <span class="material-symbols-outlined" aria-hidden="true">smart_toy</span>
     </button>
 
@@ -356,12 +379,14 @@
         </div>
 
         <div class="chat-window" id="chatWindow" role="log" aria-live="polite" aria-relevant="additions">
-            <div class="message bot-message">Ola! Sou a ColorIA Agenda. Digite 1 para agendar, 2 para consultoria de cor ou 3 para tendencias de corte.</div>
+            <div class="message bot-message">Ola! Sou a ColorIA Agenda. Digite 1 para agendar, 2 para consultoria de cor
+                ou 3 para tendencias de corte.</div>
         </div>
 
         <!-- Entrada de texto usada tanto no modo local quanto no modo com API -->
         <div class="chat-input-area">
-            <input type="text" id="userInput" class="chat-input" placeholder="Digite 1, 2, 3 ou sua pergunta..." autocomplete="off" aria-label="Digite sua mensagem">
+            <input type="text" id="userInput" class="chat-input" placeholder="Digite 1, 2, 3 ou sua pergunta..."
+                autocomplete="off" aria-label="Digite sua mensagem">
             <button id="sendBtn" class="btn-send" type="button" aria-label="Enviar mensagem">
                 <span class="material-symbols-outlined" aria-hidden="true">send</span>
             </button>
@@ -369,4 +394,5 @@
     </aside>
     <p class="site-credit page-wrapper">Desenvolvido por Adilson, inspirado na proposta do Renovo Cabeleireiros.</p>
 </body>
+
 </html>

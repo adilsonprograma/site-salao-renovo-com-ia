@@ -58,7 +58,7 @@
 .admin-hero__copy {
     display: grid;
     gap: 12px;
-    max-width: 64ch;
+    max-width: 60ch;
 }
 
 .admin-hero__lead {
@@ -173,7 +173,7 @@
     gap: 16px;
 }
 
-.admin-panel__header > div {
+.admin-panel__header>div {
     flex: 1;
     min-width: 200px;
 }

@@ -79,9 +79,17 @@ body::after {
 }
 
 @keyframes moveGradients {
-    0% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(-5vw, 5vw) scale(1.1); }
-    100% { transform: translate(5vw, -5vw) scale(0.9); }
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(-5vw, 5vw) scale(1.1);
+    }
+
+    100% {
+        transform: translate(5vw, -5vw) scale(0.9);
+    }
 }
 
 img {
@@ -171,7 +179,12 @@ textarea {
 }
 
 /* Common Card Base for Glassmorphism */
-.card, .metric-card, .service-card, .schedule-badge, .contact-panel, .showcase-note {
+.card,
+.metric-card,
+.service-card,
+.schedule-badge,
+.contact-panel,
+.showcase-note {
     border: 1px solid var(--card-border);
     background: var(--card-bg);
     box-shadow: var(--card-shadow);
@@ -202,7 +215,7 @@ textarea {
     color: var(--brand-deep);
     font-family: "Inter", sans-serif;
     font-size: 0.85rem;
-    font-weight: 700;
+    font-weight: 300;
     letter-spacing: 0.15em;
     text-transform: uppercase;
 }
@@ -212,14 +225,14 @@ h2,
 h3 {
     margin: 0;
     font-family: "Outfit", sans-serif;
-    font-weight: 700;
+    font-weight: 300;
     line-height: 1.1;
     letter-spacing: -0.02em;
     color: var(--ink);
 }
 
 h1 {
-    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-size: clamp(2rem, 6vw, 5.5rem);
 }
 
 h2 {
@@ -240,8 +253,8 @@ li {
 /* Hero Section */
 .hero {
     display: grid;
-    gap: 40px;
-    align-items: center;
+    gap: 24px;
+    align-items: start;
     padding-top: 20px;
 }
 
@@ -349,7 +362,7 @@ li {
 
 .metric-card strong {
     font-size: 1.15rem;
-    font-weight: 700;
+    font-weight: 500;
 }
 
 .metric-card p {
@@ -359,13 +372,10 @@ li {
 
 .hero__visual {
     position: relative;
-    min-height: 600px;
 }
 
 .hero__media {
     position: relative;
-    height: 100%;
-    min-height: 600px;
     border-radius: var(--radius-xl);
     overflow: hidden;
     box-shadow: 0 30px 80px rgba(24, 27, 22, 0.15);
@@ -388,31 +398,30 @@ li {
     transform: scale(1.05);
 }
 
+/* Cards below hero image */
+.hero__cards-below {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
 .floating-card {
-    position: absolute;
-    z-index: 2;
     display: grid;
     gap: 10px;
-    max-width: 280px;
-    padding: 20px;
+    padding: 24px;
     border: 1px solid var(--card-border);
     border-radius: var(--radius-lg);
     background: var(--surface-strong);
     box-shadow: 0 20px 40px rgba(31, 36, 23, 0.15);
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
-    animation: floatCard 8s ease-in-out infinite;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.floating-card--top {
-    top: 30px;
-    right: -20px;
-}
-
-.floating-card--bottom {
-    bottom: 30px;
-    left: -20px;
-    animation-delay: -4s;
+.floating-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px rgba(31, 36, 23, 0.25);
+    background: rgba(40, 46, 38, 0.85);
 }
 
 .floating-card__label {
@@ -532,7 +541,7 @@ li {
     left: 0;
     right: 0;
     padding: 40px 30px 30px;
-    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
 }
 
 .carousel__content h3 {
@@ -575,7 +584,7 @@ li {
 .carousel__button:hover {
     transform: translateY(-2px);
     background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .carousel__dots {
@@ -632,7 +641,7 @@ li {
     background: var(--surface-strong);
     color: var(--brand-deep);
     font-size: 1.8rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 /* Schedule */
@@ -682,7 +691,7 @@ li {
 }
 
 .schedule-table tbody tr {
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 /* Contact */
@@ -729,7 +738,7 @@ li {
 .contact-form textarea {
     width: 100%;
     padding: 16px 20px;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: var(--radius-md);
     background: rgba(255, 255, 255, 0.06);
     color: var(--ink);
@@ -776,8 +785,8 @@ li {
 .fade-up {
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), 
-                transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .fade-up.is-visible {
@@ -823,13 +832,13 @@ li {
     flex-direction: column;
     width: min(380px, calc(100% - 40px));
     height: 560px;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-lg);
     overflow: hidden;
     background: rgba(20, 24, 18, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
     z-index: 999;
 }
 
@@ -839,8 +848,15 @@ li {
 }
 
 @keyframes fadeInSlideUp {
-    from { opacity: 0; transform: translateY(20px) scale(0.95); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .chat-header {
@@ -848,8 +864,8 @@ li {
     gap: 16px;
     align-items: center;
     padding: 20px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    background: rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.2);
     color: #fff;
 }
 
@@ -874,7 +890,9 @@ li {
     transition: opacity 0.2s;
 }
 
-.close-chat:hover { opacity: 1; }
+.close-chat:hover {
+    opacity: 1;
+}
 
 .chat-window {
     flex: 1;
@@ -897,7 +915,7 @@ li {
 
 .bot-message {
     align-self: flex-start;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     border-bottom-left-radius: 4px;
 }
 
@@ -912,7 +930,7 @@ li {
     display: flex;
     gap: 10px;
     padding: 16px;
-    background: rgba(0,0,0,0.2);
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .chat-input {
@@ -920,13 +938,13 @@ li {
     padding: 14px 20px;
     border: none;
     border-radius: 999px;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     color: #fff;
     font-family: "Inter", sans-serif;
 }
 
 .chat-input:focus {
-    background: rgba(255,255,255,0.15);
+    background: rgba(255, 255, 255, 0.15);
     box-shadow: 0 0 0 2px var(--brand);
 }
 
@@ -945,36 +963,119 @@ li {
 
 /* Media Queries */
 @media (min-width: 900px) {
-    .hero { grid-template-columns: 1fr 1fr; }
-    .hero__metrics { grid-template-columns: repeat(3, 1fr); }
-    .gallery-showcase { grid-template-columns: 0.8fr 1.2fr; align-items: center; }
-    .showcase-notes { grid-template-columns: repeat(2, 1fr); }
-    .story { grid-template-columns: 0.8fr 1.2fr; align-items: start; }
-    .service-grid { grid-template-columns: repeat(3, 1fr); }
-    .schedule__header { grid-template-columns: 1fr auto; align-items: center; }
-    .contact__intro { grid-template-columns: 1fr auto; align-items: start; }
-    .contact__layout { grid-template-columns: 0.4fr 0.6fr; }
-    .contact-form__grid { grid-template-columns: repeat(2, 1fr); }
+    .hero {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .hero__cards-below {
+        grid-column: 1 / -1;
+    }
+
+    .hero__metrics {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .gallery-showcase {
+        grid-template-columns: 0.8fr 1.2fr;
+        align-items: center;
+    }
+
+    .showcase-notes {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .story {
+        grid-template-columns: 0.8fr 1.2fr;
+        align-items: start;
+    }
+
+    .service-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .schedule__header {
+        grid-template-columns: 1fr auto;
+        align-items: center;
+    }
+
+    .contact__intro {
+        grid-template-columns: 1fr auto;
+        align-items: start;
+    }
+
+    .contact__layout {
+        grid-template-columns: 0.4fr 0.6fr;
+    }
+
+    .contact-form__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (max-width: 899px) {
-    .floating-card { position: static; max-width: none; }
-    .hero__visual { min-height: auto; display: grid; gap: 20px; }
-    .hero__media { min-height: 400px; }
+    .hero__cards-below {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 640px) {
-    .page-wrapper { width: min(calc(100% - 32px), var(--max-width)); }
-    .site-header { padding-top: 16px; }
-    .card { padding: 32px 24px; }
-    h1 { font-size: clamp(2.6rem, 11vw, 3.5rem); }
-    h2 { font-size: clamp(2.2rem, 8vw, 2.8rem); }
-    .hero__media { min-height: 320px; }
-    .carousel__media { min-height: 300px; }
-    .carousel__image { height: 350px; }
-    .carousel__footer { flex-direction: column; align-items: flex-start; gap: 16px; }
-    .chat-widget { right: 16px; bottom: 100px; width: calc(100% - 32px); height: min(600px, 75vh); }
-    .fab-chat { right: 16px; bottom: 16px; width: 60px; height: 60px; }
-    .contact-form__grid { grid-template-columns: 1fr; }
-    .contact-pills { flex-direction: column; }
+    .page-wrapper {
+        width: min(calc(100% - 32px), var(--max-width));
+    }
+
+    .site-header {
+        padding-top: 16px;
+    }
+
+    .card {
+        padding: 32px 24px;
+    }
+
+    h1 {
+        font-size: clamp(2.6rem, 11vw, 3.5rem);
+    }
+
+    h2 {
+        font-size: clamp(2.2rem, 8vw, 2.8rem);
+    }
+
+    .hero__media {
+        min-height: 320px;
+    }
+
+    .carousel__media {
+        min-height: 300px;
+    }
+
+    .carousel__image {
+        height: 350px;
+    }
+
+    .carousel__footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .chat-widget {
+        right: 16px;
+        bottom: 100px;
+        width: calc(100% - 32px);
+        height: min(600px, 75vh);
+    }
+
+    .fab-chat {
+        right: 16px;
+        bottom: 16px;
+        width: 60px;
+        height: 60px;
+    }
+
+    .contact-form__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-pills {
+        flex-direction: column;
+    }
 }
